@@ -1,0 +1,242 @@
+ body {
+            font-family: 'Arial', sans-serif;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .full-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.pexels.com/photos/1955134/pexels-photo-1955134.jpeg?cs=srgb&dl=pexels-sebastian-palomino-933481-1955134.jpg&fm=jpg');
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+            z-index: -1;
+        }
+
+        .header {
+            position: sticky;
+            top: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px 20px;
+            z-index: 100;
+        }
+
+        .cab-name {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .nav-links a {
+            color: #fff;
+            font-size: 1.1rem;
+            margin-left: 20px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #4CAF50;
+        }
+
+        .user-info {
+            color: #fff;
+            display: flex;
+            align-items: center;
+        }
+
+       .hero-section {
+		    width: 100%;
+		    text-align: center;
+		    padding: 100px 20px;
+		    position: relative;
+		    margin-top:200px;
+		    z-index: 1; /* Ensure it's above the background */
+		}
+		
+		.section-header {
+		    font-size: 2.5rem;
+		   
+		    font-weight: bold;
+		    margin-bottom: 30px;
+		    color: #ff0000; /* Red color */
+		    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Add text shadow for better contrast */
+		}
+
+
+        .form-container {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-fields label {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .form-fields input {
+            border-radius: 10px;
+            margin-bottom: 15px;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+        }
+
+        .form-fields input:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
+        .btn-primary, .btn-success {
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-size: 1.1rem;
+            width: 100%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-primary {
+            background-color: #4CAF50;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #45a049;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            border: none;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 400px;
+            margin-top: 30px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .choose-cab-btn {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .distance-section {
+            margin-top: 20px;
+        }
+
+        .alert-danger {
+            margin-top: 20px;
+            background-color: rgba(255, 0, 0, 0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 50px 20px;
+            }
+
+            .section-header {
+                font-size: 2rem;
+            }
+
+            .form-container {
+                padding: 20px;
+            }
+        }
+        
+        
+        
+        
+        .full-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://images.pexels.com/photos/1955134/pexels-photo-1955134.jpeg?cs=srgb&dl=pexels-sebastian-palomino-933481-1955134.jpg&fm=jpg'); 
+    background-size: cover; 
+    background-position: center center; 
+    background-attachment: fixed; 
+    z-index: -1; 
+}
+
+/* Hero Section Styling */
+.hero-section {
+    position: relative;
+    z-index: 1;
+}
+
+/* Optional: Dark overlay */
+.full-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* Dark overlay with 50% opacity */
+    z-index: -1; 
+}
+
+
+<section class="hero-section">
+       
+
+        <!-- Error Message Display -->
+        <c:if test="${not empty error}">
+            <div class="alert alert-danger">${error}</div>
+        </c:if>
+
+        <!-- Form and Map Section -->
+        <form id="locationForm" action="<%= request.getContextPath() %>/user/CabServlet" method="POST">
+            <div class="form-container">
+                <!-- Form Fields -->
+                <div class="form-fields">
+                    <label for="pickup">Pickup Location</label>
+                    <input id="pickup" class="form-control" type="text" name="pickupLocation" placeholder="Enter pickup location" required>
+
+                    <label for="dropoff">Drop-off Location</label>
+                    <input id="dropoff" class="form-control" type="text" name="dropLocation" placeholder="Enter drop-off location" required>
+
+                    <button type="button" class="btn btn-primary" onclick="validateAndCalculate()">Calculate Distance</button>
+
+                    <!-- Distance Display -->
+                    <h4 class="text-center mt-3 distance-section" id="distance-section" style="display: none;">
+                        Distance: <span id="distance">0</span> km
+                    </h4>
+
+                    <!-- Hidden input field for distance -->
+                    <input type="hidden" id="hiddenDistance" name="distance">
+                </div>
+
+                <!-- Map Container -->
+                <div class="map-container">
+                    <div id="map"></div>
+                </div>
+
+                <!-- "Choose a Cab" Button -->
+                <div class="choose-cab-btn" id="choose-cab-btn">
+                    <button type="submit" class="btn btn-success" onclick="return validateAndSubmit();">
+                        Choose a Cab <i class="bi bi-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </section>

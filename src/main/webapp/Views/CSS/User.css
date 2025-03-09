@@ -1,0 +1,183 @@
+/* Full-page background image */
+/* Full-page background image */
+.full-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://images.pexels.com/photos/1955134/pexels-photo-1955134.jpeg?cs=srgb&dl=pexels-sebastian-palomino-933481-1955134.jpg&fm=jpg'); 
+    background-size: cover; 
+    background-position: center center; 
+    background-attachment: fixed; 
+    z-index: -1; 
+}
+
+/* Hero Section Styling */
+.hero-section {
+    position: relative;
+    z-index: 1;
+}
+
+/* Optional: Dark overlay */
+.full-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* Dark overlay with 50% opacity */
+    z-index: -1; 
+}
+
+/* Map Container */
+#map {
+    height: 300px;
+    width: 500px;
+    border-radius: 15px;
+    bottom: 0;
+}
+
+/* Header Styling */
+.header {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    background-color: #343a40;
+    padding: 15px 20px;
+    border-radius: 10px;
+    z-index: 1000;
+}
+
+.cab-name {
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+}
+
+.nav-links {
+    color: white;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: 500;
+    font-size: 1.2rem;
+}
+
+.nav-links a:hover {
+    color: #f1c40f;
+    text-decoration: underline;
+}
+
+/* Form Section Styling */
+.form-container {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+    padding: 40px;
+    height: calc(100vh - 150px);
+    overflow: hidden;
+}
+
+.form-fields {
+    width: 25%;
+    padding-right: 20px;
+}
+
+/* Change input labels to white and bold */
+
+.form-fields input {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.form-fields button {
+    font-size: 1.2rem;
+    padding: 10px;
+    width: 100%;
+    color:black;
+}
+
+.map-container {
+    margin-top: 60px;
+    width: 500px;
+    height: 300px;
+    background-color: #e9ecef;
+    border-radius: 15px;
+}
+
+/* Stylish User Info Section */
+.user-info {
+    font-size: 1rem;
+    color: #fff;
+    padding: 10px;
+}
+
+.user-icon {
+    font-size: 2rem;
+    color: #6c757d;
+    background-color: #f1f1f1;
+    border-radius: 50%;
+    padding: 10px;
+    border: 2px solid #ddd;
+}
+
+.greeting-text {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: white;
+}
+
+.username-text {
+    font-size: 1rem;
+    color: white;
+    font-weight: normal;
+}
+
+.user-info:hover .user-icon {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+/* Centered Text Styling */
+.section-header {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: red;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .form-container {
+        padding: 20px;
+    }
+
+    .form-fields, .map-container {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .section-header {
+        font-size: 1.5rem;
+    }
+}
