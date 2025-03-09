@@ -15,30 +15,106 @@
     <!-- Bootstrap Icons CDN for User Icon -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=My_key&libraries=places"></script>
-    <link href = "../CSS/User.css" rel="stylesheet">
-   
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8RD20mEV_I4LM8veafl2RmuNbat7u9jU&libraries=places"></script>
+    <link href="../CSS/User.css" rel="stylesheet">
+
     <style>
-    
-    	.full-bg {
-	    position: absolute;
-	    top: 0;
-	    left: 0;
-	    width: 100%;
-	    height: 100%;
-	    background-image: url('https://images.pexels.com/photos/1955134/pexels-photo-1955134.jpeg?cs=srgb&dl=pexels-sebastian-palomino-933481-1955134.jpg&fm=jpg'); 
-	    background-size: cover; 
-	    background-position: center center; 
-	    background-attachment: fixed; 
-	    z-index: -1; 
-	}
-	
-		.form-fields label {
-	   font-size: 1.2rem;
-	   margin-bottom: 5px;
-	   color: #ffffff;
-	}
-	
+        .full-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.pexels.com/photos/1955134/pexels-photo-1955134.jpeg?cs=srgb&dl=pexels-sebastian-palomino-933481-1955134.jpg&fm=jpg');
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+            z-index: -1;
+        }
+
+        .form-container {
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+            padding: 10px;
+            border: 2px solid #ffffff;
+            margin-top: 115px;
+            width: 100%;
+            height: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .form-fields label {
+        	justify-content: center;
+            align-items: center;
+            font-size: 1rem;
+            margin-bottom: 5px;
+            color: #ffffff;
+        }
+
+        .form-fields input {
+            border-radius: 5px;
+            border: 1px solid #ffffff;
+            margin-bottom: 10px;
+            padding: 8px;
+            width: 100%;
+        }
+
+        .map-container {
+            width: 100%;
+            border-radius: 8px;
+            border: 2px solid #ffffff;
+            margin-bottom: 15px;
+            margin-top: 10px;
+        }
+
+        .choose-cab-btn button {
+            width: 50%;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #map {
+            width: 100%;
+            height: 250px;
+            border-radius: 8px;
+        }
+
+        .content-left {
+            color: #fff;
+            padding: 40px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50%; /* Make the height take up the full container */
+            text-align: center; /* Center text horizontally */
+        }
+
+        .content-left h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+            color: #f1f1f1;
+        }
+
+        .content-left p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #e0e0e0;
+            font-weight: 500;
+        }
+
+        /* Add padding and margin to the form container for proper spacing */
+        .form-container {
+            margin-top: 130px;
+        }
     </style>
 </head>
 
@@ -54,113 +130,111 @@
             <a href="#">Profile</a>
             <a href="UserGuide.jsp">Documentation</a>
         </div>
-        
-            
-         <div class="user-info d-flex align-items-center">
-    
-		    <c:if test="${not empty sessionScope.userFirstName}">
-		        <!-- Stylish user icon and greeting -->
-		        <div class="d-flex align-items-center">
-		            <div class="user-icon me-2">
-		                <i class="bi bi-person-circle"></i> 
-		            </div>
-		           
-		            <span class="greeting-text me-2">Hi, ${sessionScope.userFirstName}</span>
-		            <c:if test="${not empty sessionScope.userUsername}">
-		                <span class="username-text">@${sessionScope.userUsername}</span>
-		            </c:if>
-		        </div>
-		    </c:if>
-		</div>
+        <div class="user-info d-flex align-items-center">
+            <c:if test="${not empty sessionScope.userFirstName}">
+                <div class="d-flex align-items-center">
+                    <div class="user-icon me-2">
+                        <i class="bi bi-person-circle"></i>
+                    </div>
+                    <span class="greeting-text me-2">Hi, ${sessionScope.userFirstName}</span>
+                    <c:if test="${not empty sessionScope.userUsername}">
+                        <span class="username-text">@${sessionScope.userUsername}</span>
+                    </c:if>
+                </div>
+            </c:if>
+        </div>
     </div>
-    
 
     <!-- Full-page background image with overlay -->
-    <section >
-	   	<div class="full-bg">
-		    <div class="hero-section">
-		        <!-- Centered Text -->
-		       
-	<!-- Display error message if exists -->
-			<c:if test="${not empty error}">
-			    <div class="alert alert-danger">${error}</div>
-			</c:if>
-	
-	<!-- Form and Map Section -->
-			<form id="locationForm" action="<%= request.getContextPath() %>/user/CabServlet" method="POST">
-			    <div class="form-container">
-			        <!-- Form Fields (Pickup and Dropoff Locations) -->
-			        <div class="form-fields">
-			            <label for="pickup">Pickup Location</label>
-			            <input id="pickup" class="form-control" type="text" name="pickupLocation" placeholder="Enter pickup location" required>
-			
-			            <label for="dropoff">Drop-off Location</label>
-			            <input id="dropoff" class="form-control" type="text" name="dropLocation" placeholder="Enter drop-off location" required>
-			
-			            <button type="button" class="btn btn-primary" onclick="validateAndCalculate()">Calculate Distance</button>
-			
-			            <h4 class="text-center mt-3" id="distance-section" style="display: none;">
-			                Distance: <span id="distance">0</span> km
-			            </h4>
-			
-			            <!-- Hidden input field for distance -->
-			            <input type="hidden" id="hiddenDistance" name="distance" >
-			        </div>
-			
-			        <!-- Map Container -->
-			        <div class="map-container">
-			            <div id="map"></div>
-			        </div>
-			
-			        <!-- "Choose a Cab" Button (Redirect to next page) -->
-			        <div class="choose-cab-btn" id="choose-cab-btn"> 
-			            <button type="submit" class="btn btn-success" onclick="return validateAndSubmit();">
-			                Choose a Cab <i class="bi bi-arrow-right"></i>
-			            </button>
-			        </div>
-			    </div>
-			    
-			    
-			</form>
-			
-			
-		</div>
-		</div>
-	</section>
+    <section>
+        <div class="full-bg">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <!-- Left Column with Paragraph (Centered) -->
+                    <div class="col-12 col-md-6 d-flex justify-content-center align-items-center">
+                        <div class="content-left">
+                            <div>
+                                <h2>Your Journey with <br>Mega City Cabs<br>
+                                	Starts Here. 
+                                </h2>
+                                <p>
+                                    
+                                    Your safety and comfort is our main concern.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column with Form -->
+                    <div class="col-12 col-md-6">
+                        <form id="locationForm" action="<%= request.getContextPath() %>/user/CabServlet" method="POST">
+                            <div class="form-container">
+                                <!-- Form Fields (Pickup and Dropoff Locations) -->
+                                <div class="form-fields">
+                                    <label for="pickup">Pickup Location</label>
+                                    <input id="pickup" class="form-control" type="text" name="pickupLocation" placeholder="Enter pickup location" required>
+
+                                    <label for="dropoff">Drop-off Location</label>
+                                    <input id="dropoff" class="form-control" type="text" name="dropLocation" placeholder="Enter drop-off location" required>
+
+                                    <button type="button" class="btn btn-primary" onclick="validateAndCalculate()">Calculate Distance</button>
+
+                                    <h4 class="text-center mt-3" id="distance-section" style="display: none; color:white;">
+                                        Distance: <span id="distance">0</span>
+                                    </h4>
+
+                                    <!-- Hidden input field for distance -->
+                                    <input type="hidden" id="hiddenDistance" name="distance">
+                                </div>
+
+                                <!-- Map Container -->
+                                <div class="map-container">
+                                    <div id="map"></div>
+                                </div>
+
+                                <!-- "Choose a Cab" Button (Redirect to next page) -->
+                                <div class="choose-cab-btn" id="choose-cab-btn">
+                                    <button type="submit" class="btn btn-success" onclick="return validateAndSubmit();">
+                                        Choose a Cab <i class="bi bi-arrow-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-    function validateAndCalculate() {
-        let pickup = document.getElementById("pickup").value.trim();
-        let dropoff = document.getElementById("dropoff").value.trim();
+        function validateAndCalculate() {
+            let pickup = document.getElementById("pickup").value.trim();
+            let dropoff = document.getElementById("dropoff").value.trim();
 
-        if (pickup === "" || dropoff === "") {
-            alert("Please enter both Pickup and Drop-off locations before calculating the distance.");
-            return;
+            if (pickup === "" || dropoff === "") {
+                alert("Please enter both Pickup and Drop-off locations before calculating the distance.");
+                return;
+            }
+
+            // Call the function to calculate the distance
+            calculateDistance();
         }
 
-        // Call the function to calculate the distance
-        calculateDistance();
-    }
+        function validateAndSubmit() {
+            let pickup = document.getElementById("pickup").value.trim();
+            let dropoff = document.getElementById("dropoff").value.trim();
+            let distance = document.getElementById("hiddenDistance").value.trim();
 
-    function validateAndSubmit() {
-        let pickup = document.getElementById("pickup").value.trim();
-        let dropoff = document.getElementById("dropoff").value.trim();
-        let distance = document.getElementById("hiddenDistance").value.trim();
+            if (pickup === "" || dropoff === "") {
+                alert("Please enter both Pickup and Drop-off locations before choosing a cab.");
+                return false; // Prevent form submission
+            }
 
-        if (pickup === "" || dropoff === "") {
-            alert("Please enter both Pickup and Drop-off locations before choosing a cab.");
-            return false; // Prevent form submission
+            return true; // Allow form submission
         }
 
-        return true; // Allow form submission
-    }
-</script>
-    
-    
-    
-    <script>
         let map;
         let directionsService;
         let directionsRenderer;
@@ -195,14 +269,13 @@
             const pickup = document.getElementById("pickup").value;
             const dropoff = document.getElementById("dropoff").value;
 
-            // Validate if both pickup and dropoff are entered
             if (!pickup || !dropoff) {
                 alert("Please enter both pickup and drop-off locations.");
                 return;
             }
 
             const geocoder = new google.maps.Geocoder();
-            
+
             // Check if the pickup location is within Sri Lanka
             geocoder.geocode({ address: pickup }, function (results, status) {
                 if (status !== google.maps.GeocoderStatus.OK || !isWithinSriLanka(results[0].geometry.location)) {
@@ -231,8 +304,6 @@
                             document.getElementById("distance").innerText = distance;
                             document.getElementById("distance-section").style.display = "block";
                             document.getElementById("hiddenDistance").value = distance;
-
-                            // Show distance after calculation
                             document.getElementById("choose-cab-btn").style.display = "block";  // Show the "Choose a Cab" button
                         } else {
                             alert("Could not calculate distance.");
@@ -251,12 +322,6 @@
         }
 
         window.onload = initMap;
-        
-        
-       
-
-       
-
     </script>
 
 </body>
