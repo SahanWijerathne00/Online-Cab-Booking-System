@@ -54,7 +54,7 @@
                             <a class="nav-link" href="#">Contact Us</a>
                         </li>
                     </ul>
-                    <a href="<%= request.getContextPath() %>/Views/User/U_Login.jsp" class="nav-link btn btn-danger text-white ms-5">Login</a>
+                    <a href="<%= request.getContextPath() %>/Views/User/U_Login.jsp" class="nav-link btn btn-danger text-white ms-5" style="width:75px; height:40px; padding-top:4px; font-size:20px;">Login</a>
                 </div>
             </div>
         </nav>
@@ -65,7 +65,7 @@
 	    <div class="hero-text">
 	        <div class="text1">Welcome to Mega City Cab</div><br>
 	        Reliable and Fast Taxi Service in Colombo
-	        <p>Book your ride with us easily and securely, and enjoy the best & comfortable cab experience in Colombo.</p>
+	        <p>Book your ride with us easily & securely, and enjoy the best & comfortable cab experience in Colombo.</p>
 	
 	        <!-- View Cabs Button with Icon -->
 	        <div class="d-flex justify-content-center">

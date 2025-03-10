@@ -12,11 +12,105 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../CSS/Admin.css">
+    <style>
+        /* Custom Styling for Main Content */
+        .main-content {
+            background: #e9ecef; /* Light background for content */
+            padding: 30px;
+            border-radius: 10px;
+            margin-left: 260px; /* Adjust for sidebar */
+            transition: margin-left 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Box shadow to lift content */
+        }
+
+        .main-content h2 {
+            color: #333;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .main-content p {
+            color: #555;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        /* Styling for Cards */
+        .card {
+            border-radius: 10px; /* Rounded corners for the cards */
+            background-color: #f8f9fa; /* Light card background */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px); /* Card lift effect */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Hover shadow effect */
+        }
+
+        .card-body {
+            background-color: #f1f7b7; /* White background for card body */
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            color: #007bff; /* Blue color for the titles */
+        }
+
+        .card-text {
+            color: #6c757d; /* Gray color for the text */
+        }
+
+        .navbar-text {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        /* Welcome section styling */
+        .main-content .welcome-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .main-content .welcome-section img {
+            width: 300px;
+            border-radius: 10px;
+        }
+
+        /* Sidebar Collapse Effect */
+        .sidebar.collapsed {
+            width: 60px;
+        }
+
+        .main-content.expanded {
+            margin-left:  0px;
+        }
+
+        /* Responsive Design for Smaller Screens */
+        @media (max-width: 768px) {
+            .main-content h2 {
+                font-size: 1.8rem;
+            }
+
+            .main-content p {
+                font-size: 1rem;
+            }
+
+            .card-title {
+                font-size: 1.3rem;
+            }
+
+            .card-body {
+                padding: 15px;
+            }
+        }
+    </style>
 </head>
 <body>
 
     <!-- Sidebar (Fixed) -->
-     <div class="sidebar" id="sidebar">
+    <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <h4 class="sidebar-title"><i class="fas fa-tachometer-alt"></i> <span class="sidebar-text">Admin Panel</span></h4>
         </div>
@@ -28,9 +122,9 @@
                 <a class="nav-link" href="#"><i class="fas fa-calendar-alt"></i> <span class="nav-text">View Bookings</span></a>
             </li>
             <li class="nav-item">
-		    <a class="nav-link" href="<%= request.getContextPath() %>/Admin/Add_CategoryServlet"><i class="fas fa-list"></i> <span class="nav-text">Manage Category</span></a>
-		    </li>
-			<li class="nav-item">
+                <a class="nav-link" href="<%= request.getContextPath() %>/Admin/Add_CategoryServlet"><i class="fas fa-list"></i> <span class="nav-text">Manage Category</span></a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="<%= request.getContextPath() %>/Admin/Manage_CabsServlet"><i class="fas fa-car"></i> <span class="nav-text">Cabs Management</span></a>
             </li>
             <li class="nav-item">
@@ -45,18 +139,50 @@
         </ul>
     </div>
 
-
     <!-- Main Content Area -->
     <div class="main-content" id="main-content">
         <nav class="navbar navbar-light bg-light px-3">
             <button class="btn btn-dark" type="button" onclick="toggleSidebar()">
                 <i class="fas fa-bars"></i>
             </button>
-            <span class="navbar-text">Cab Booking System - Admin</span>
+            <span class="navbar-text">Mega City Cab - Admin Panel</span>
         </nav>
         <div class="container mt-4">
-            <h2>Welcome to the Admin Dashboard</h2>
-            <p>Manage bookings, drivers, users, and more from this panel.</p>
+            <div class="welcome-section">
+                <div>
+                    <h2>Welcome to the Admin Dashboard</h2>
+                    <p>Manage All Things in Here. Explore the features from the sidebar to perform the necessary tasks.</p>
+                </div>
+                <img src="https://phoenixnap.com/glossary/wp-content/uploads/2024/05/what-is-a-firewall-1.jpg" alt="Dashboard Image"> <!-- Example Image -->
+            </div>
+
+            <!-- Example Cards - Removed and changed to content-focused layout -->
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">Manage System</h5>
+                            <p class="card-text">Use the sidebar to navigate and manage various parts of the cab system. Edit categories, manage cabs, and more.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">View Bookings</h5>
+                            <p class="card-text">Check the status of customer bookings and ensure everything is running smoothly.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">Manage Registered Clients</h5>
+                            <p class="card-text">You can view and manage the details of all registered clients here. Ensure that client information is up-to-date.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
