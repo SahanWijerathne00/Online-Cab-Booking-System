@@ -38,9 +38,9 @@
                     <div class="col-md-6 mb-3">
                         <label for="category" class="form-label">Category:</label>
                         <select class="form-control" id="category" name="category" required>
-                            <option value="5 Seater">expo</option>
-                            <option value="6 Seater">city</option>
-                            <option value="Van">car</option>
+                            <option value="expo">expo</option>
+                            <option value="city">city</option>
+                            <option value="car">car</option>
                         </select>
                     </div>
                     <div class="col-md-6 mb-3">

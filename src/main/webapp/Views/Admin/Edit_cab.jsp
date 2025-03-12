@@ -39,14 +39,17 @@
                         <h4><b>Cab Details</b></h4>
                         <div class="row">
                             <!-- Hidden input for Cab ID -->
+                            <!-- Debugging: Output the cab.id value -->
+<p>ID: ${cab.id}</p>
+                            
                             <input type="hidden" name="id" value="${cab.id}" />
                             
                             <div class="col-md-6 mb-3">
                                 <label for="category" class="form-label">Category</label>
                                 <select class="form-select" id="category" name="category" required>
-                                    <option value="5 Seater" <c:if test="${cab.category == '5 Seater'}">selected</c:if>>5 Seater</option>
-                                    <option value="14 Seater" <c:if test="${cab.category == '14 Seater'}">selected</c:if>>14 Seater</option>
-                                    <option value="9 Seater" <c:if test="${cab.category == '9 Seater'}">selected</c:if>>9 Seater</option>
+                                    <option value="5 Seater" <c:if test="${cab.category == 'expo'}">selected</c:if>>expo</option>
+                                    <option value="14 Seater" <c:if test="${cab.category == 'city'}">selected</c:if>>city</option>
+                                    <option value="9 Seater" <c:if test="${cab.category == 'car'}">selected</c:if>>car</option>
                                 </select>
                             </div>
                             <div class="col-md-6 mb-3">

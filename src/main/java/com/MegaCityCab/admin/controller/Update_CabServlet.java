@@ -24,13 +24,19 @@ public class Update_CabServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             // Get updated data from the form
-            String idParam = request.getParameter("id");
-            if (idParam == null || idParam.isEmpty()) {
-                throw new IllegalArgumentException("ID is missing");
-            }
+           String idParam = request.getParameter("id");
 
-            // Parse the ID
-            int id = Integer.parseInt(idParam);
+           
+
+            // Parse the ID safely
+            int id = 0;
+            try {
+                id = Integer.parseInt(idParam);
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+                response.sendRedirect("error.jsp?message=Invalid ID Format");
+                return;
+            }
 
             // Retrieve other form data
             String regNumber = request.getParameter("regNumber");
@@ -48,9 +54,9 @@ public class Update_CabServlet extends HttpServlet {
 
             // Create a new Add_Cab object with the updated data
             Add_Cab cab = new Add_Cab(id, regNumber, category, plateNumber, fare, driverName, driverLicense, driverContact, driverAddress, imagePath, status);
-            
+
             // Use the DAO to update the cab in the database
-            boolean isUpdated = cabDAO.updateCab(cab); 
+            boolean isUpdated = cabDAO.updateCab(cab);
 
             // Redirect to the appropriate page based on success/failure
             if (isUpdated) {
@@ -60,10 +66,10 @@ public class Update_CabServlet extends HttpServlet {
             }
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
-            response.sendRedirect("error.jsp?message=Invalid ID");
+            response.sendRedirect("error2.jsp?message=Invalid ID");
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect("error.jsp");
+            response.sendRedirect("error3.jsp");
         }
     }
 
@@ -81,7 +87,7 @@ public class Update_CabServlet extends HttpServlet {
             filePart.write(savePath);
 
             // Return the relative image path to store in the database
-            return "images/cabs/" + fileName;
+            return "resources/Images/cabs/" + fileName;
         } else {
             // If no image is uploaded, return the existing image path (you might want to keep the old image)
             return request.getParameter("existingImage"); // Ensure that the current image is available in the form if no new image is uploaded

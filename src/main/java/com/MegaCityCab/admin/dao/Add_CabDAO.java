@@ -126,7 +126,7 @@ public class Add_CabDAO {
     
 
     // SQL Query to update an existing cab
-    private static final String UPDATE_CAB_SQL = "UPDATE cab SET category = ?, reg_number = ?, model = ?, plate_number = ?, fare = ?,  driver_name = ?, license_number = ?, contact = ?, address = ? WHERE id = ?";
+    private static final String UPDATE_CAB_SQL = "UPDATE cab SET category = ?, reg_number = ?, model = ?, plate_number = ?, fare = ?, image = ?,  driver_name = ?, license_number = ?, contact = ?, address = ? WHERE id = ?";
 
     // Method to update the cab details in the database
     public boolean updateCab(Add_Cab cab) {
@@ -139,11 +139,12 @@ public class Add_CabDAO {
             statement.setString(3, cab.getModel());
             statement.setString(4, cab.getPlateNumber());
             statement.setString(5,  cab.getFare());
-            statement.setString(6, cab.getDriverName());
-            statement.setString(7, cab.getDriverLicense());
-            statement.setString(8, cab.getDriverContact());
-            statement.setString(9, cab.getDriverAddress());
-            statement.setInt(10, cab.getid());  
+            statement.setString(6,  cab.getImage());
+            statement.setString(7, cab.getDriverName());
+            statement.setString(8, cab.getDriverLicense());
+            statement.setString(9, cab.getDriverContact());
+            statement.setString(10, cab.getDriverAddress());
+            statement.setInt(11, cab.getid());  
 
             int rowsAffected = statement.executeUpdate();
             if (rowsAffected > 0) {

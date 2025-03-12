@@ -1,4 +1,4 @@
-package com.MegaCityCab.admin.controller;
+ package com.MegaCityCab.admin.controller;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

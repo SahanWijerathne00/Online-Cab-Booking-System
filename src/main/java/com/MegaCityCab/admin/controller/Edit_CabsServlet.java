@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 
 import com.MegaCityCab.admin.dao.Add_CabDAO;
 import com.MegaCityCab.admin.model.Add_Cab;
@@ -21,12 +22,13 @@ public class Edit_CabsServlet extends HttpServlet {
 	private Add_CabDAO CabDAO = new Add_CabDAO();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String idParam = request.getParameter("id");
+    	request.getParameterMap().forEach((key, value) -> System.out.println(key + ": " + Arrays.toString(value)));
 
-        if (idParam == null || idParam.isEmpty()) {
-            response.sendRedirect("error.jsp"); // Redirect to an error page if the id is missing
-            return;
-        }
+    	// Get the id parameter
+    	String idParam = request.getParameter("id");
+    	if (idParam == null || idParam.isEmpty()) {
+    	    throw new IllegalArgumentException("ID is missing");
+    	}
 
         try {
             int id = Integer.parseInt(idParam);

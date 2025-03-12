@@ -85,7 +85,7 @@
 								
 								        <td>
 								            <a href="Edit_CabsServlet?id=${cab.id}" class="btn btn-info">Edit</a>
-                                            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal" onclick="setDeleteId(${category.id})">Delete</button>
+                                            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal" onclick="setDeleteId(${cab.id})">Delete</button>
 										</td>
 								    </tr>
 								</c:forEach>
@@ -137,7 +137,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="successMessageModalLabel">Success</h5>
+                    <h5 class="modal-title" id="successMessageModalLabel">Operation Status</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
