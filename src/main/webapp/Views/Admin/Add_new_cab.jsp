@@ -22,7 +22,7 @@
             <button class="btn btn-dark" type="button" onclick="toggleSidebar()">
                 <i class="fas fa-bars"></i>
             </button>
-            <span class="navbar-text">Cab Booking System - Admin</span>
+            <span class="navbar-text" style="font-size: 1.2rem; font-weight: 500;">Mega City Cab - Admin Panel</span>
         </nav>
         
         
@@ -39,7 +39,10 @@
                         <label for="category" class="form-label">Category:</label>
                         <select class="form-control" id="category" name="category" required>
                             <option value="expo">expo</option>
+                            <option value="budget">budget</option>
+                            <option value="semi14">Semi</option>
                             <option value="car">car</option>
+                            <option value="9 seater">9 Seater</option>
                             <option value="14 seater">14 seater</option>
                         </select>
                     </div>

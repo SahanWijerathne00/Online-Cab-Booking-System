@@ -13,15 +13,14 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../CSS/Admin.css">
     <style>
-    	
-        /* Custom Styling for Main Content */
+    	       
         .main-content {
-            background: #e9ecef; /* Light background for content */
+            background: #e9ecef; 
             padding: 30px;
             border-radius: 10px;
-            margin-left: 260px; /* Adjust for sidebar */
+            margin-left: 260px; 
             transition: margin-left 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Box shadow to lift content */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
         }
 
         .main-content h2 {
@@ -38,27 +37,27 @@
 
         /* Styling for Cards */
         .card {
-            border-radius: 10px; /* Rounded corners for the cards */
-            background-color: #f8f9fa; /* Light card background */
+            border-radius: 10px;
+            background-color: #f8f9fa; 
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .card:hover {
-            transform: translateY(-5px); /* Card lift effect */
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Hover shadow effect */
+            transform: translateY(-5px); 
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); 
         }
 
         .card-body {
-            background-color: #f1f7b7; /* White background for card body */
+            background-color: #f1f7b7; 
         }
 
         .card-title {
             font-size: 1.5rem;
-            color: #007bff; /* Blue color for the titles */
+            color: #007bff; 
         }
 
         .card-text {
-            color: #6c757d; /* Gray color for the text */
+            color: #6c757d; 
         }
 
         .navbar-text {

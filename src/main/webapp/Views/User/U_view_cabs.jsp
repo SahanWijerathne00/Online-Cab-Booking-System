@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-    <%@ page import="java.util.List" %>
+<%@ page import="java.util.List" %>
 <%@ page import="com.MegaCityCab.user.model.CabDetails" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,9 +8,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Available Vehicles</title>
-    
+    <link href="../CSS/User.css" rel="stylesheet">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        
+    
     
     <style>
         .cab-card { margin-bottom: 20px; }
@@ -20,12 +22,18 @@
     </style>
 </head>
 <body>
-
-    <!-- Header -->
-    <header class="bg-dark text-white text-center py-3">
-        <h1>Welcome to Mega City Cab</h1>
-    </header>
-
+	
+	
+	<%
+	    String category = request.getParameter("category");
+	    if (category == null) {
+	        category = "Expo";  // Default to Expo if no category is selected
+	    }
+	    List<CabDetails> cabs = (List<CabDetails>) session.getAttribute("cabs");
+	    if (cabs == null || cabs.isEmpty()) {
+	        request.setAttribute("error", "No cabs found.");
+	    }
+	%>
     <!-- Category Selection Bar -->
     <div class="container">
         <div class="vehicle-bar">
@@ -33,7 +41,6 @@
                 <input type="hidden" name="category" id="selectedCategory">
                 <button type="submit" class="btn vehicle-option ${selectedCategory eq 'Expo' ? 'active' : ''}" onclick="setCategory('Expo')">Expo</button>
                 <button type="submit" class="btn vehicle-option ${selectedCategory eq 'Budget' ? 'active' : ''}" onclick="setCategory('Budget')">Budget</button>
-                <button type="submit" class="btn vehicle-option ${selectedCategory eq 'City' ? 'active' : ''}" onclick="setCategory('City')">City</button>
                 <button type="submit" class="btn vehicle-option ${selectedCategory eq 'Semi' ? 'active' : ''}" onclick="setCategory('Semi')">Semi</button>
                 <button type="submit" class="btn vehicle-option ${selectedCategory eq 'Car' ? 'active' : ''}" onclick="setCategory('Car')">Car</button>
                 <button type="submit" class="btn vehicle-option ${selectedCategory eq '9 Seater' ? 'active' : ''}" onclick="setCategory('9 Seater')">9 Seater</button>
@@ -42,14 +49,6 @@
         </div>
     </div>
     
-
-
-<%
-    List<CabDetails> cabs = (List<CabDetails>) session.getAttribute("cabs");
-    if (cabs == null) {
-        request.setAttribute("error", "No cabs found.");
-    }
-%> 
 
 
     <!-- Cabs Display Section -->
@@ -61,9 +60,20 @@
 					<img src="<%= request.getContextPath() %>/${cab.image}" class="card-img-top" alt="Cab Image">
                     <div class="card-body">
                         <h5 class="card-title">${cab.model}</h5>
+                        	               
                         <p class="card-text">${cab.category}</p>
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bookingModal">Book Now</button>
-
+						<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bookingModal">Book Now</button>
+													<!-- Booking Form - Hidden Form -->
+							<form id="bookingForm" action="<%= request.getContextPath() %>/user/CabServlet" method="POST">
+							    <!-- Hidden Fields for Cab Data -->
+							    <input type="hidden" id="bookCabModel" name="cabModel">
+							    <input type="hidden" id="bookCabCategory" name="cabCategory">
+							    <input type="hidden" id="bookCabRate" name="cabRate">
+							    <input type="hidden" id="bookCabFare" name="cabFare">
+							    <input type="hidden" id="bookCabId" name="cabId">
+							    <input type="hidden" id="bookCabDistance" name="distance">
+							</form>
+						
                         <!-- "More" Button Submits Form to Servlet -->
                         <form action="<%= request.getContextPath() %>/user/CabDetailsServlet" method="POST">
 						    <input type="hidden" name="cabId" value="${cab.id}">
@@ -90,7 +100,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="moreDetailsLabel">Cab Details</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
            <c:if test="${not empty sessionScope.cabCategory}">
 		        <p><strong>Category:</strong> ${sessionScope.cabCategory}</p>
@@ -157,15 +167,15 @@
 	                            <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter your phone number" required>
 	                        </div>
 	                        <div class="col-md-4">
-	                            <label for="email">Email (Optional)</label>
-	                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
+	                            <label for="email">Email</label>
+	                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
 	                        </div>
 	                    </div>
 	
 	                    <!-- Hidden Cab Data -->
-	                    <input type="text" id="cabModel" name="cabModel" value="${cab.model}" >
-	                    <input type="hidden" id="cabCategory" name="cabCategory" value="${sessionScope.cabCategory}">
-	                    <input type="text" id="distance" name="distance" value="${sessionScope.distance}">
+	                    <input type="hidden" id="cabModel" name="cabModel" value="${cab.model}" >
+	                    <input type="hidden" id="cabCategory" name="cabCategory" value="${cab.category}">
+	                    <input type="hidden" id="distance" name="distance" value="${sessionScope.distance}">
 	                    
 	                    <div class="modal-footer">
 	                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -179,7 +189,7 @@
 	
 	<script>
 	
-	    // Function to handle form submission
+	    
 	    function submitBooking() {
 	        // You can add AJAX or form submission logic here
 	        alert("Booking details submitted!");
@@ -212,8 +222,6 @@
         }
     });
 </script>
-
-
 
 
     <!-- Bootstrap JS (required for modals) -->

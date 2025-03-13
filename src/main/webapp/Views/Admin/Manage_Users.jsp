@@ -60,9 +60,11 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Name</th>
+                                    <th>Gender</th>
+                                    <th>Address</th>
+                                    <th>NIC</th>
                                     <th>Email</th>
                                     <th>Phone</th>
-                                    <th>Gender</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -74,18 +76,16 @@
                                             <tr>
                                                 <td>${user.registerId}</td>
                                                 <td>${user.firstName} ${user.lastName}</td>
+                                                <td>${user.gender}</td>
+                                                <td>${user.address}</td>
+                                                <td>${user.nic}</td>
                                                 <td>${user.email}</td>
                                                 <td>${user.phoneNumber}</td>
-                                                <td>${user.gender}</td>
                                                 <td>
                                                     <div class="dropdown">
-													    <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-													        Action
+													    <button class="btn btn-info " type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+													        Remove
 													    </button>
-													    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-													        <li><a class="dropdown-item" href="#">Edit</a></li>
-													        <li><a class="dropdown-item text-danger" href="#">Delete</a></li>
-													    </ul>
 													        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 													    
 													</div>

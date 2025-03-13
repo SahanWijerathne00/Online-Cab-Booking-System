@@ -37,7 +37,10 @@ public class CabServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String pickupLocation = request.getParameter("pickupLocation");
         String dropoffLocation = request.getParameter("dropLocation");
-        String distance = request.getParameter("distance");  // Ensure this retrieves value
+        String distance = request.getParameter("distance");  
+        String cabModel = request.getParameter("cabModel");
+        String cabCategory = request.getParameter("cabCategory");
+        
 
 
         if (pickupLocation == null || pickupLocation.trim().isEmpty() ||
@@ -52,8 +55,11 @@ public class CabServlet extends HttpServlet {
         session.setAttribute("pickupLocation", pickupLocation);
         session.setAttribute("dropLocation", dropoffLocation);
         session.setAttribute("distance", distance);
+        session.setAttribute("cabModel", cabModel);
+        session.setAttribute("cabCategory", cabCategory);
+        
 
-        response.sendRedirect(request.getContextPath() + "/Views/User/U_view_cabs.jsp");
+        response.sendRedirect(request.getContextPath() + "/user/CabServlet");
     }
 
     }

@@ -15,7 +15,7 @@
     	/* Hero Section */
         .hero {
             height: 100vh;
-            background-image: url('../Images/index_home.jpg'); /* Path to the uploaded full image */
+            background-image: url('../Images/index_home.jpg'); 
             background-size: cover;
             background-position: center;
             position: relative;
@@ -26,7 +26,6 @@
             text-align: center;
         }
         
-       
     </style>
 </head>
 <body>
@@ -70,9 +69,9 @@
 	        <!-- View Cabs Button with Icon -->
 	        <div class="d-flex justify-content-center">
 	            <a href="#viewCabs" class="btn btn-primary d-flex align-items-center">
-	                <i class="bi bi-car-front me-2"></i> <!-- Cab Icon -->
+	                <i class="bi bi-car-front me-2"></i> 
 	                View Cabs
-	                <i class="bi bi-arrow-right ms-2"></i> <!-- Right Arrow Icon -->
+	                <i class="bi bi-arrow-right ms-2"></i>
 	            </a>
 	        </div>
 	    </div>

@@ -6,6 +6,7 @@ import java.util.List;
 import com.MegaCityCab.user.model.Cab;
 import com.MegaCityCab.user.model.CabDetails;
 
+
 public class CabDAO {
 
     // Method to get cabs by category
@@ -70,20 +71,15 @@ public class CabDAO {
     
     public CabDetails getCabDetails(int cabId) {
         CabDetails cabDetails = null;
-        String query = """
-            SELECT c.id, c.category, c.model, c.fare, c.driver_name, c.contact,
-                    cat.description, cat.rate
-            FROM cab c WHERE cabId
-            JOIN category cat ON c.category = cat.category_name
-            WHERE c.id = ?;
-        """;
-
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-
-            stmt.setInt(1, cabId);
-            ResultSet rs = stmt.executeQuery();
-
+        String query = "SELECT cab.id, cab.category, cab.reg_number, cab.model, cab.plate_number, cab.fare, cab.image, cab.driver_name, cab.license_number, cab.contact, cab.address, cab.status, category.category_name, category.rate, category.description " +
+                       "FROM cab " +
+                       "JOIN category ON cab.category = category.category_name " +
+                       "WHERE cab.id = ?";
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, cabId);
+            ResultSet rs = preparedStatement.executeQuery();
+            
             if (rs.next()) {
                 cabDetails = new CabDetails(
                     rs.getInt("id"),
@@ -93,15 +89,19 @@ public class CabDAO {
                     rs.getDouble("rate"),
                     rs.getDouble("fare"),
                     rs.getString("driver_name"),
-                    rs.getString("contact")
+                    rs.getString("contact"),
+                    rs.getString("image"),
+                    rs.getString("license_number"),          
+                    rs.getString("plate_number"),
+                    rs.getString("address"),
+                    rs.getString("status")
                 );
-            }         
+            }
         } catch (SQLException e) {
             e.printStackTrace();
-            // Optional: You could also log the error to a logging framework or re-throw the exception
         }
-        
-        return cabDetails; // Return null if no data found or an error occurred
+        return cabDetails;
     }
+
 
 }

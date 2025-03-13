@@ -52,7 +52,7 @@
                                     <th>Reg. Code</th>
                                     <th>Category</th>
                                     <th>Model</th>
-                                    <th>Basic Fare</th>
+                                    <th>Basic Fare (Rs)</th>
                                     <th>Details</th>
                                     <th>Status</th>
                                     <th>Action</th>

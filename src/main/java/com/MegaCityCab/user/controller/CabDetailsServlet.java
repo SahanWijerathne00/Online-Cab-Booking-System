@@ -21,7 +21,6 @@ public class CabDetailsServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String cabIdStr = request.getParameter("cabId");
-
         if (cabIdStr == null || cabIdStr.trim().isEmpty()) {
             request.setAttribute("error", "Invalid Cab ID.");
             request.getRequestDispatcher("/Views/User/U_view_cabs1.jsp").forward(request, response);
@@ -31,7 +30,9 @@ public class CabDetailsServlet extends HttpServlet {
         int cabId = Integer.parseInt(cabIdStr);
         CabDetails cabDetails = cabDAO.getCabDetails(cabId);
 
+
         if (cabDetails == null) {
+        	
             request.setAttribute("error", "Cab details not found.");
             request.getRequestDispatcher("/Views/User/U_view_cabs2.jsp").forward(request, response);
             return;

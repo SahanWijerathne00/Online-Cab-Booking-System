@@ -42,7 +42,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Category Name</th>
-                                    <th>Rate</th>
+                                    <th>Rate (Rs/Per Kilometer)</th>
                                     <th>Description</th>
                                     <th>Status</th>
                                     <th>Action</th>

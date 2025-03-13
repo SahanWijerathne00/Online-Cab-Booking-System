@@ -32,6 +32,7 @@
         }
         .nav-link {
             color: #d1d1d1;
+            font-weight:bold;
             padding: 15px;
             text-decoration: none;
             transition: all 0.3s ease;
@@ -56,6 +57,30 @@
         }
         .main-content.expanded {
             margin-left: 0;
+        }
+
+        /* Modal Custom Styles */
+        .modal-content {
+            border-radius: 10px;
+        }
+
+        .modal-header {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .modal-footer {
+            border-top: none;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
         }
     </style>
 </head>
@@ -86,19 +111,35 @@
                 <a class="nav-link" href="<%= request.getContextPath() %>/Admin/Manage_AdminsServlet"><i class="fas fa-user-shield"></i> <span class="nav-text">System Admins</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-danger" href="#"><i class="fas fa-sign-out-alt"></i> <span class="nav-text">Logout</span></a>
+                <a class="nav-link text-danger" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal"><i class="fas fa-sign-out-alt"></i> <span class="nav-text">Logout</span></a>
             </li>        
         </ul>
     </div>
 
+    <!-- Logout Confirmation Modal -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="logoutModalLabel">Confirm Logout</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to logout?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmLogout">Logout</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', function() {
-          
                 document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
                 this.classList.add('active');
             });
@@ -112,6 +153,12 @@
             if (currentPage.includes(linkHref)) {
                 link.classList.add('active');
             }
+        });
+
+        // Add event listener to the confirm logout button
+        document.getElementById('confirmLogout').addEventListener('click', function() {
+            // Redirect to login page after confirmation
+            window.location.href = '<%= request.getContextPath() %>/Views/Admin/A_Login.jsp'; 
         });
     </script>
     

@@ -24,7 +24,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
+            height: 110%;
             background-image: url('https://images.pexels.com/photos/1955134/pexels-photo-1955134.jpeg?cs=srgb&dl=pexels-sebastian-palomino-933481-1955134.jpg&fm=jpg');
             background-size: cover;
             background-position: center center;
@@ -37,7 +37,7 @@
             border-radius: 8px;
             padding: 10px;
             border: 2px solid #ffffff;
-            margin-top: 115px;
+            margin-top: 100px;
             width: 100%;
             height: 100%;
             max-width: 800px;
@@ -113,7 +113,7 @@
 
         /* Add padding and margin to the form container for proper spacing */
         .form-container {
-            margin-top: 130px;
+            margin-top: 110px;
         }
     </style>
 </head>
@@ -128,7 +128,8 @@
             <a href="ContactUs.jsp">Contact Us</a>
             <a href="#">My Bookings</a>
             <a href="#">Profile</a>
-            <a href="UserGuide.jsp">Documentation</a>
+            <a href="UserGuide.jsp">Guidelines</a>
+            <a href="">Logout</a>
         </div>
         <div class="user-info d-flex align-items-center">
             <c:if test="${not empty sessionScope.userFirstName}">

@@ -114,7 +114,7 @@
             <a href="ContactUs.jsp">Contact Us</a>
             <a href="#">My Bookings</a>
             <a href="#">Profile</a>
-            <a href="UserGuide.jsp">Documentation</a>
+            <a href="UserGuide.jsp">Guidelines</a>
         </div>
         
             

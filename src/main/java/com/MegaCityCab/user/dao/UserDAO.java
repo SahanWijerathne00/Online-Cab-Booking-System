@@ -52,9 +52,11 @@ public class UserDAO {
                 user.setRegisterId(resultSet.getInt("register_id"));
                 user.setFirstName(resultSet.getString("first_name"));
                 user.setLastName(resultSet.getString("last_name"));
+                user.setAddress(resultSet.getString("address"));
                 user.setEmail(resultSet.getString("email"));
                 user.setPhoneNumber(resultSet.getString("phone_number"));
                 user.setGender(resultSet.getString("gender"));
+                user.setNic(resultSet.getString("nic"));
 
                 users.add(user);
             }
