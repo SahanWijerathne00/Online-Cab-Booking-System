@@ -14,8 +14,9 @@ public class CabDetailsServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private CabDAO cabDAO;
 
+    @Override
     public void init() {
-        cabDAO = new CabDAO();
+        cabDAO = new CabDAO(); // Initialize the DAO
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -43,7 +44,6 @@ public class CabDetailsServlet extends HttpServlet {
         session.setAttribute("cabRate", cabDetails.getRate());
         session.setAttribute("cabFare", cabDetails.getFare());
         session.setAttribute("driverName", cabDetails.getDriverName());
-        
         session.setAttribute("driverContact", cabDetails.getContact());
 
         response.sendRedirect(request.getContextPath() + "/Views/User/U_view_cabs.jsp");

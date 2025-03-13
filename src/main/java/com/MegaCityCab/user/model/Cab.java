@@ -8,10 +8,11 @@ public class Cab {
     private String plateNumber;
     private String driverName;
     private String image; // For cab image
+    private String fare;
 
     // Getters and Setters
 
-    public Cab(int id, String category, String regNumber, String model, String plateNumber, String driverName, String image, String string) {
+    public Cab(int id, String category, String regNumber, String model, String plateNumber, String driverName, String image, String fare,  String string) {
         this.id = id;
         this.category = category;
         this.regNumber = regNumber;
@@ -19,6 +20,7 @@ public class Cab {
         this.plateNumber = plateNumber;
         this.driverName = driverName;
         this.image = image;
+        this.fare = fare;
     }
 
     // Getters and setters
@@ -57,8 +59,17 @@ public class Cab {
     public String getPlateNumber() {
         return plateNumber;
     }
+    
+    
+    public String getFare() {
+		return fare;
+	}
 
-    public void setPlateNumber(String plateNumber) {
+	public void setFare(String fare) {
+		this.fare = fare;
+	}
+
+	public void setPlateNumber(String plateNumber) {
         this.plateNumber = plateNumber;
     }
 

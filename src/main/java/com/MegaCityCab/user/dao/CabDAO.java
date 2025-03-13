@@ -1,4 +1,4 @@
-package com.MegaCityCab.user.dao;
+   package com.MegaCityCab.user.dao;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -38,6 +38,7 @@ public class CabDAO {
                 rs.getString("reg_number"),
                 rs.getString("model"),
                 rs.getString("plate_number"),
+                rs.getString("fare"),
                 rs.getString("image"),
                 rs.getString("driver_name"),
                 rs.getString("license_number")
@@ -71,9 +72,9 @@ public class CabDAO {
         CabDetails cabDetails = null;
         String query = """
             SELECT c.id, c.category, c.model, c.fare, c.driver_name, c.contact,
-                   cat.category_name, cat.description, cat.rate
-            FROM cab c WHERE CAB
-            JOIN category cat ON c.category = cat.id
+                    cat.description, cat.rate
+            FROM cab c WHERE cabId
+            JOIN category cat ON c.category = cat.category_name
             WHERE c.id = ?;
         """;
 
@@ -85,19 +86,22 @@ public class CabDAO {
 
             if (rs.next()) {
                 cabDetails = new CabDetails(
-                        rs.getInt("id"),
-                        rs.getString("category_name"),
-                        rs.getString("description"),
-                        rs.getString("model"),
-                        rs.getDouble("rate"),
-                        rs.getDouble("fare"),
-                        rs.getString("driver_name"),
-                        rs.getString("contact")
+                    rs.getInt("id"),
+                    rs.getString("category_name"),
+                    rs.getString("description"),
+                    rs.getString("model"),
+                    rs.getDouble("rate"),
+                    rs.getDouble("fare"),
+                    rs.getString("driver_name"),
+                    rs.getString("contact")
                 );
-            }
+            }         
         } catch (SQLException e) {
             e.printStackTrace();
+            // Optional: You could also log the error to a logging framework or re-throw the exception
         }
-        return cabDetails;
+        
+        return cabDetails; // Return null if no data found or an error occurred
     }
+
 }

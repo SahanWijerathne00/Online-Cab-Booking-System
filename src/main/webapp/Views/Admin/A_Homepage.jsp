@@ -13,6 +13,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../CSS/Admin.css">
     <style>
+    	
         /* Custom Styling for Main Content */
         .main-content {
             background: #e9ecef; /* Light background for content */
@@ -71,6 +72,7 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 30px;
+            
         }
 
         .main-content .welcome-section img {

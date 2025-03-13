@@ -45,6 +45,7 @@
         .login-card .btn {
             border-radius: 20px;
             font-size: 18px;
+            font-weight: bold;
             padding: 12px;
             width: 100%;
             background-color:#8582ab;
@@ -84,7 +85,7 @@
     <!-- Login Form -->
     <div class="login-card">
         <div class="card-header"></div> <!-- Image section -->
-        <h2>Login</h2>
+        <h2>Admin Panel Login</h2>
         <form action="<%= request.getContextPath() %>/Admin/AdminLoginServlet" method="post">
             <div class="mb-3">
                 <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
@@ -99,7 +100,6 @@
             <button type="submit" class="btn btn-primary">Login</button>
             <div class="footer-links mt-3">
                 <a href="#">Forgot password?</a>
-                <a href="#">Create Account</a>
             </div>
         </form>
     </div>

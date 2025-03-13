@@ -10,6 +10,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../CSS/Admin.css">
+    
 </head>
 <body>
 
@@ -22,7 +24,7 @@
             <button class="btn btn-dark" type="button" onclick="toggleSidebar()">
                 <i class="fas fa-bars"></i>
             </button>
-            <span class="navbar-text">Cab Booking System - Admin</span>
+            <span class="navbar-text" style="font-size: 1.2rem; font-weight: 500;">Mega City Cab - Admin Panel</span>
         </nav>
 
         <div class="container mt-4">
@@ -227,6 +229,17 @@
 	        document.getElementById('deleteCategoryId').value = id;
 	    }
 	</script>
+	
+	<script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('main-content');
+
+            // Toggle sidebar state
+            sidebar.classList.toggle('collapsed');
+            mainContent.classList.toggle('expanded');
+        }
+    </script>
     
 </body>
 </html>

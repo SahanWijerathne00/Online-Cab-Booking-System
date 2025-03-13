@@ -25,7 +25,7 @@
             <button class="btn btn-dark" type="button" onclick="toggleSidebar()">
                 <i class="fas fa-bars"></i>
             </button>
-            <span class="navbar-text">Cab Booking System - Admin</span>
+            <span class="navbar-text" style="font-size: 1.2rem; font-weight: 500;">Mega City Cab - Admin Panel</span>
         </nav>
 
         <div class="container mt-4">
@@ -148,10 +148,15 @@
     </script>
     
     <script>
-    function toggleSidebar() {
-        document.querySelector(".sidebar").classList.toggle("active");
-    }
-</script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('main-content');
+
+            // Toggle sidebar state
+            sidebar.classList.toggle('collapsed');
+            mainContent.classList.toggle('expanded');
+        }
+    </script>
     
 
 </body>

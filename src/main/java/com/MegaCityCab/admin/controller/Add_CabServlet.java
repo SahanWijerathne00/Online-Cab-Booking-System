@@ -46,7 +46,7 @@ public class Add_CabServlet extends HttpServlet {
                 }
 
                 // Define the upload directory inside the webapp
-                String uploadDir = getServletContext().getRealPath("/") + "resources/Images/cabs/";
+                String uploadDir = getServletContext().getRealPath("/") + "/Images/cabs/";
 
                 File uploadPath = new File(uploadDir);
                 if (!uploadPath.exists()) {
@@ -58,7 +58,7 @@ public class Add_CabServlet extends HttpServlet {
                 filePart.write(uploadDir + fileName);
 
                 // Save the relative image path
-                imagePath = "resources/Images/cabs/" + fileName;
+                imagePath = "/Images/cabs/" + fileName;
             }
 
             // Driver details

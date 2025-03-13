@@ -45,10 +45,7 @@
     white-space: nowrap;
 }
 
-.nav-link:hover, .nav-link.active {
-    background: #6f42c1;
-    color: white !important;
-}
+
 
 .sidebar.collapsed .nav-text {
     display: none;
@@ -56,6 +53,11 @@
 
 .nav-link i {
     font-size: 18px;
+}
+
+.navbar-text {
+    font-size: 1.2rem;
+    font-weight: 500;
 }
 
 .main-content {

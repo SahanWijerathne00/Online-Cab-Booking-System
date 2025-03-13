@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <%@ page import="java.util.List" %>
+<%@ page import="com.MegaCityCab.user.model.CabDetails" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,8 +42,7 @@
         </div>
     </div>
     
-    <%@ page import="java.util.List" %>
-<%@ page import="com.MegaCityCab.user.model.CabDetails" %>
+
 
 <%
     List<CabDetails> cabs = (List<CabDetails>) session.getAttribute("cabs");
@@ -50,13 +51,14 @@
     }
 %> 
 
+
     <!-- Cabs Display Section -->
    <div class="container mt-4">
     <div class="row">
         <c:forEach var="cab" items="${cabs}">
             <div class="col-md-4">
                 <div class="card cab-card">
-                    <img src="${cab.image}" class="card-img-top" alt="${cab.model}">
+					<img src="<%= request.getContextPath() %>/${cab.image}" class="card-img-top" alt="Cab Image">
                     <div class="card-body">
                         <h5 class="card-title">${cab.model}</h5>
                         <p class="card-text">${cab.category}</p>
@@ -64,9 +66,10 @@
 
                         <!-- "More" Button Submits Form to Servlet -->
                         <form action="<%= request.getContextPath() %>/user/CabDetailsServlet" method="POST">
-                            <input type="hidden" name="cabId" value="${cab.id}">
-                            <button type="submit" class="btn btn-secondary">More</button>
-                        </form>
+						    <input type="hidden" name="cabId" value="${cab.id}">
+						    <button type="submit" class="btn btn-secondary">More</button>
+						</form>
+
                     </div>
                 </div>
             </div>
@@ -81,14 +84,6 @@
 </div>
 
 <!-- More Details Modal (Shows Only If Data Exists) -->
-<c:if test="${not empty sessionScope.cabCategory}">
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var modal = new bootstrap.Modal(document.getElementById('moreDetailsModal'));
-            modal.show();
-        });
-    </script>
-</c:if>
 
 <div class="modal fade" id="moreDetailsModal" tabindex="-1" aria-labelledby="moreDetailsLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -97,44 +92,26 @@
                 <h5 class="modal-title" id="moreDetailsLabel">Cab Details</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <p><strong>Category:</strong> ${sessionScope.cabCategory}</p>
-                <p><strong>Description:</strong> ${sessionScope.cabDescription}</p>
-                <p><strong>Model:</strong> ${sessionScope.cabModel}</p>
-                <p><strong>Rate:</strong> ${sessionScope.cabRate} LKR/km</p>
-                <p><strong>Basic Fare:</strong> ${sessionScope.cabFare} LKR</p>
-                <p><strong>Driver:</strong> ${sessionScope.driverName}</p>
-                <p><strong>Contact:</strong> ${sessionScope.driverContact}</p>
-            </div>
+           <c:if test="${not empty sessionScope.cabCategory}">
+		        <p><strong>Category:</strong> ${sessionScope.cabCategory}</p>
+		        <p><strong>Description:</strong> ${sessionScope.cabDescription}</p>
+		        <p><strong>Model:</strong> ${sessionScope.cabModel}</p>
+		        <p><strong>Rate:</strong> ${sessionScope.cabRate} LKR/km</p>
+		        <p><strong>Fare:</strong> ${sessionScope.cabFare} LKR</p>
+		        <p><strong>Driver Name:</strong> ${sessionScope.driverName}</p>
+		        <p><strong>Contact:</strong> ${sessionScope.driverContact}</p>
+		    </c:if>
+		
+		    <c:if test="${empty sessionScope.cabCategory}">
+		        <p>No cab details found for the provided ID.</p>
+		    </c:if>
         </div>
     </div>
 </div>
 
 <!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 
-<!-- Bootstrap JS -->
-<!-- Debugging session values -->
-<p>DEBUG: Cab Model - ${sessionScope.cabModel}</p>
-<p>DEBUG: Category - ${sessionScope.cabCategory}</p>
-<p>DEBUG: Description - ${sessionScope.cabDescription}</p>
-<p>DEBUG: Rate - ${sessionScope.cabRate}</p>
-<p>DEBUG: Fare - ${sessionScope.cabFare}</p>
-<p>DEBUG: Driver - ${sessionScope.driverName}</p>
-<p>DEBUG: Contact - ${sessionScope.driverContact}</p>
-
-
-
-<!-- Bootstrap JS -->
-
-
-	    
-    
-    
-
-    <!-- Booking Modal -->
-   <!-- Booking Modal -->
 	<!-- Booking Modal -->
 	<div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
 	    <div class="modal-dialog modal-lg">
@@ -212,6 +189,16 @@
 	        document.getElementById("selectedCategory").value = category;
 	    }
 	</script>
+	
+	
+	<c:if test="${not empty sessionScope.cabCategory}">
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var modal = new bootstrap.Modal(document.getElementById('moreDetailsModal'));
+            modal.show();
+        });
+    </script>
+</c:if>
 	
 	<script>
     document.addEventListener("DOMContentLoaded", function() {

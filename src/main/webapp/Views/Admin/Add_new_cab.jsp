@@ -39,8 +39,8 @@
                         <label for="category" class="form-label">Category:</label>
                         <select class="form-control" id="category" name="category" required>
                             <option value="expo">expo</option>
-                            <option value="city">city</option>
                             <option value="car">car</option>
+                            <option value="14 seater">14 seater</option>
                         </select>
                     </div>
                     <div class="col-md-6 mb-3">
