@@ -9,8 +9,8 @@ import com.MegaCityCab.user.model.Cab;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/user/CabServlet")
-public class CabServlet extends HttpServlet {
+@WebServlet("/user/ViewCabsServlet")
+public class ViewCabsServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
@@ -33,7 +33,7 @@ public class CabServlet extends HttpServlet {
         // Set available cabs and selected category as request attributes for the view
         request.setAttribute("cabs", cabs);
         request.setAttribute("selectedCategory", category); 
-        request.getRequestDispatcher("/Views/User/U_view_cabs.jsp").forward(request, response);
+        request.getRequestDispatcher("/Views/ViewCabs.jsp").forward(request, response);
     }
     
     
@@ -63,7 +63,7 @@ public class CabServlet extends HttpServlet {
         session.setAttribute("cabCategory", cabCategory);
         
 
-        response.sendRedirect(request.getContextPath() + "/user/CabServlet");
+        response.sendRedirect(request.getContextPath() + "/user/ViewsCabsServlet");
     }
 
     }

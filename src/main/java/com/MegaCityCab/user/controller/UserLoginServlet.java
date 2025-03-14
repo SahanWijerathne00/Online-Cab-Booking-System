@@ -30,6 +30,10 @@ public class UserLoginServlet extends HttpServlet {
             // Successful login
         	session.setAttribute("message", "Login successful!");
             session.setAttribute("userFirstName", user.getFirstName());
+            session.setAttribute("userLastName", user.getLastName());
+            session.setAttribute("userEmail", user.getEmail());
+            session.setAttribute("userAddress", user.getAddress());
+            session.setAttribute("userPhoneNumber", user.getPhoneNumber());
             
             response.sendRedirect(request.getContextPath() + "/Views/User/U_Homepage.jsp");
         } else {

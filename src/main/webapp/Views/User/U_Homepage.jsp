@@ -32,6 +32,54 @@
             z-index: -1;
         }
 
+        .user-icon {
+            font-size: 1.5rem;
+            color: #6c757d;
+            background-color: #f1f1f1;
+            border-radius: 50%;
+            padding: 8px;
+            height: 35px;
+            width: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #ddd;
+            cursor: pointer;
+        }
+
+        .user-menu {
+            display: none;
+            position: absolute;
+            top: 40px;
+            right: 10px;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-info {
+            position: relative;
+        }
+
+        .user-info:hover .user-menu {
+            display: block;
+        }
+
+        .logout-btn {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #000000;
+            background: #edd5d3;
+            border: none;
+            padding: 5px;
+            text-align: center;
+        }
+        
+        .logout-btn:hover {
+            color: #e83727;
+        }
+
         .form-container {
             background-color: rgba(0, 0, 0, 0.5);
             border-radius: 8px;
@@ -46,7 +94,7 @@
         }
 
         .form-fields label {
-        	justify-content: center;
+            justify-content: center;
             align-items: center;
             font-size: 1rem;
             margin-bottom: 5px;
@@ -93,8 +141,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 50%; /* Make the height take up the full container */
-            text-align: center; /* Center text horizontally */
+            height: 50%;
+            text-align: center;
         }
 
         .content-left h2 {
@@ -111,7 +159,6 @@
             font-weight: 500;
         }
 
-        /* Add padding and margin to the form container for proper spacing */
         .form-container {
             margin-top: 110px;
         }
@@ -126,21 +173,23 @@
         <div class="nav-links d-flex justify-content-center flex-grow-1">
             <a href="U_Homepage.jsp">Home</a>
             <a href="ContactUs.jsp">Contact Us</a>
-            <a href="#">My Bookings</a>
-            <a href="#">Profile</a>
+            <a href="Mybooking.jsp">My Bookings</a>
+            <a href="UpdateProfile.jsp">Profile</a>
             <a href="UserGuide.jsp">Guidelines</a>
-            <a href="">Logout</a>
         </div>
         <div class="user-info d-flex align-items-center">
             <c:if test="${not empty sessionScope.userFirstName}">
                 <div class="d-flex align-items-center">
-                    <div class="user-icon me-2">
+                    <div class="user-icon me-2" onclick="toggleUserMenu()">
                         <i class="bi bi-person-circle"></i>
                     </div>
                     <span class="greeting-text me-2">Hi, ${sessionScope.userFirstName}</span>
                     <c:if test="${not empty sessionScope.userUsername}">
                         <span class="username-text">@${sessionScope.userUsername}</span>
                     </c:if>
+                </div>
+                <div class="user-menu">
+                    <button class="logout-btn" onclick="confirmLogout()">Logout</button>
                 </div>
             </c:if>
         </div>
@@ -159,7 +208,6 @@
                                 	Starts Here. 
                                 </h2>
                                 <p>
-                                    
                                     Your safety and comfort is our main concern.
                                 </p>
                             </div>
@@ -210,6 +258,18 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        function toggleUserMenu() {
+            let menu = document.querySelector('.user-menu');
+            menu.style.display = (menu.style.display === "block") ? "none" : "block";
+        }
+
+        function confirmLogout() {
+            let confirmAction = confirm("Are you sure you want to logout?");
+            if (confirmAction) {
+                window.location.href = "U_Login.jsp"; // Redirect to login page
+            }
+        }
+
         function validateAndCalculate() {
             let pickup = document.getElementById("pickup").value.trim();
             let dropoff = document.getElementById("dropoff").value.trim();

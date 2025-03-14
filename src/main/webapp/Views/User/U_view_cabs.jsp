@@ -187,6 +187,16 @@
 	    </div>
 	</div>
 	
+	<c:if test="${not empty sessionScope.cabCategory}">
+	    <script>
+	        document.addEventListener("DOMContentLoaded", function() {
+	            var modal = new bootstrap.Modal(document.getElementById('moreDetailsModal'));
+	            modal.show();
+	        });
+	    </script>
+	</c:if>
+	
+	
 	<script>
 	
 	    
@@ -200,28 +210,8 @@
 	    }
 	</script>
 	
-	
-	<c:if test="${not empty sessionScope.cabCategory}">
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var modal = new bootstrap.Modal(document.getElementById('moreDetailsModal'));
-            modal.show();
-        });
-    </script>
-</c:if>
-	
-	<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Get modal element
-        var modalElement = document.getElementById('moreDetailsModal');
-        var modal = new bootstrap.Modal(modalElement);
-        
-        // Check if session data exists to show the modal
-        if ('${sessionScope.cabCategory}' != '') {
-            modal.show(); // Show the modal
-        }
-    });
-</script>
+
+
 
 
     <!-- Bootstrap JS (required for modals) -->

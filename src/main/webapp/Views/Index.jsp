@@ -44,13 +44,13 @@
                             <a class="nav-link active" href="#">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Services</a>
+                            <a class="nav-link" href="#services">Services</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">About Us</a>
+                            <a class="nav-link" href="<%= request.getContextPath() %>/Views/AboutUs.jsp">About Us</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Contact Us</a>
+                            <a class="nav-link" href="<%= request.getContextPath() %>/Views/Contact.jsp">Contact Us</a>
                         </li>
                     </ul>
                     <a href="<%= request.getContextPath() %>/Views/User/U_Login.jsp" class="nav-link btn btn-danger text-white ms-5" style="width:75px; height:40px; padding-top:4px; font-size:20px;">Login</a>
@@ -68,7 +68,7 @@
 	
 	        <!-- View Cabs Button with Icon -->
 	        <div class="d-flex justify-content-center">
-	            <a href="#viewCabs" class="btn btn-primary d-flex align-items-center">
+	            <a href="<%= request.getContextPath() %>/Views/ViewCabs.jsp" class="btn btn-primary d-flex align-items-center">
 	                <i class="bi bi-car-front me-2"></i> 
 	                View Cabs
 	                <i class="bi bi-arrow-right ms-2"></i>
@@ -79,7 +79,7 @@
 
 
     <!-- Services Section -->
-    <div class="services-section">
+    <div class="services-section" id="services">
         <div class="container">
             <h2>Our Professional Services</h2>
             <div class="row">

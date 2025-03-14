@@ -12,7 +12,6 @@
     <!-- Bootstrap 5 CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500&display=swap" rel="stylesheet" />
     <link href = "../CSS/User.css" rel="stylesheet">
     
@@ -35,46 +34,6 @@
             height: 100%;
             background: rgba(0, 0, 0, 0.6);
             z-index: -1;
-        }
-        
-        .user-icon {
-            font-size: 1.5rem; /* Reduced the font size */
-            color: #6c757d;
-            background-color: #f1f1f1;
-            border-radius: 50%;
-            padding: 8px; /* Reduced padding */
-            height: 35px; /* Reduced height */
-            width: 35px; /* Reduced width */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: 2px solid #ddd;
-        }
-        
-        .user-menu {
-            display: none;
-            position: absolute;
-            top: 40px;
-            right: 10px;
-            background-color: #fff;
-            padding: 10px;
-            border-radius: 8px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        
-        .logout-btn {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #000000;
-            background: #edd5d3;
-            border: none;
-            padding: 5px;
-            text-align: center;
-        }
-        
-        .logout-btn:hover {
-            color: #e83727;
         }
         
         .section-title {
@@ -164,33 +123,6 @@
 </head>
 
 <body>
-    <!-- Navbar -->
-    <div class="header d-flex justify-content-between align-items-center">
-        <div class="cab-name">MegaCity Cab</div>
-        <div class="nav-links d-flex justify-content-center flex-grow-1">
-            <a href="U_Homepage.jsp">Home</a>
-            <a href="ContactUs.jsp">Contact Us</a>
-            <a href="Mybooking.jsp">My Bookings</a>
-            <a href="UpdateProfile.jsp">Profile</a>
-            <a href="UserGuide.jsp">Guidelines</a>
-        </div>
-        <div class="user-info d-flex align-items-center">
-            <c:if test="${not empty sessionScope.userFirstName}">
-                <div class="d-flex align-items-center">
-                    <div class="user-icon me-2">
-                        <i class="bi bi-person-circle"></i>
-                    </div>
-                    <span class="greeting-text me-2">Hi, ${sessionScope.userFirstName}</span>
-                    <c:if test="${not empty sessionScope.userUsername}">
-                        <span class="username-text">@${sessionScope.userUsername}</span>
-                    </c:if>
-                </div>
-                <div class="user-menu">
-                    <button class="logout-btn" onclick="confirmLogout()">Logout</button>
-                </div>
-            </c:if>
-        </div>
-    </div>
 
     <!-- Contact Section -->
     <div class="container py-5">
@@ -247,20 +179,6 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <script>
-	  function toggleUserMenu() {
-	            let menu = document.querySelector('.user-menu');
-	            menu.style.display = (menu.style.display === "block") ? "none" : "block";
-	        }
-	
-	        function confirmLogout() {
-	            let confirmAction = confirm("Are you sure you want to logout?");
-	            if (confirmAction) {
-	                window.location.href = "U_Login.jsp"; // Redirect to login page
-	            }
-	        }
-	</script>
 </body>
 
 </html>
