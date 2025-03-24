@@ -44,6 +44,7 @@ public class CabServlet extends HttpServlet {
         String distance = request.getParameter("distance");  
         String cabModel = request.getParameter("cabModel");
         String cabCategory = request.getParameter("cabCategory");
+        String registerId = request.getParameter("userId");
         
 
 
@@ -61,6 +62,7 @@ public class CabServlet extends HttpServlet {
         session.setAttribute("distance", distance);
         session.setAttribute("cabModel", cabModel);
         session.setAttribute("cabCategory", cabCategory);
+        session.setAttribute("registerId", registerId);
         
 
         response.sendRedirect(request.getContextPath() + "/user/CabServlet");

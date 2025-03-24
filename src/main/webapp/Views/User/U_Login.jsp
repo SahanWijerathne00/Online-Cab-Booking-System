@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="../CSS/User.css">
     
     <style>
-    
     	body{
 			background-color: #929494;    	
     	}
@@ -70,7 +69,7 @@
                     <div class="mb-3">
                         <input type="password" name="password" class="form-control" placeholder="Password" required>
                     </div>
-                    <a href="#" class="text-primary d-block mb-3 text-end">Forgot password?</a>
+                   
                     <button type="submit" class="btn btn-primary w-100">Log In</button>
                 </form>
                 <p class="mt-3 text-center">Don't have an account? <a href="U_Register.jsp" class="text-primary">Signup</a></p>
@@ -107,7 +106,6 @@
         var message = "<c:out value='${sessionScope.message}' />";
 
         if (message) {
-         
             var successModal = new bootstrap.Modal(document.getElementById('messageModal'));
             successModal.show();
             <c:remove var="message" />
@@ -119,4 +117,4 @@
     </script>
 
 </body>
-</html>
+</html> 

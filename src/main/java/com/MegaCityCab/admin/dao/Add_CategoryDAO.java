@@ -10,7 +10,7 @@ import com.MegaCityCab.user.dao.DBConnection;
 public class Add_CategoryDAO {
 
     // SQL Query to insert a new category
-    private static final String INSERT_CATEGORY_SQL = "INSERT INTO category (category_name, rate, description, status) VALUES (?, ?, ?)";
+    private static final String INSERT_CATEGORY_SQL = "INSERT INTO category (category_name, rate, description, status) VALUES (?, ?, ?, ?)";
 
     // Method to save a new category to the database
     public boolean saveCategory(Add_Category category) {
@@ -58,6 +58,8 @@ public class Add_CategoryDAO {
         }
         return categories;
     }
+    
+    
 
     // Method to fetch a specific category by its ID
     public Add_Category getCategoryById(int id) {
@@ -97,9 +99,9 @@ public class Add_CategoryDAO {
 
             statement.setString(1, category.getCategoryName());
             statement.setString(2,  category.getRate());
-            statement.setString(2, category.getDescription());
-            statement.setString(3, category.getStatus());
-            statement.setInt(4, category.getId());  // Set the ID of the category to update
+            statement.setString(3, category.getDescription());
+            statement.setString(4, category.getStatus());
+            statement.setInt(5, category.getId());  // Set the ID of the category to update
 
             int rowsAffected = statement.executeUpdate();
             if (rowsAffected > 0) {

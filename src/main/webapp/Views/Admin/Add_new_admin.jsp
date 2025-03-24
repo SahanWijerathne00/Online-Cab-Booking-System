@@ -27,7 +27,7 @@
         </nav>
 
         <div class="container mt-4">
-            <h4 class="text-center">Create New Admin User</h4>
+            <h4 class="text-center"><b>Create New Admin User</b></h4>
             <div class="card mt-3 mx-auto" style="max-width: 500px;">
                 <div class="card-body">
                     <form action="<%= request.getContextPath() %>/Admin/Add_AdminServlet" method="POST" enctype="multipart/form-data">
@@ -58,12 +58,12 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="avatar" class="form-label">Profile Picture</label>
+                            <label for="avatar" class="form-label">Profile Picture (Optional)</label>
                             <input type="file" class="form-control" id="avatar" name="avatar" accept="image/*">
                         </div>
 
                         <div class="d-flex justify-content-between">
-                        	<div>
+                            <div>
                                 <a href="<%= request.getContextPath() %>/Admin/Manage_AdminsServlet" class="btn btn-secondary">Back</a>
                             </div>
                             <button type="submit" class="btn btn-primary">Create Admin</button>
@@ -77,49 +77,26 @@
         </div>
     </div>
 
-    <!-- Get Message and Status from Servlet (Check for Null) -->
-    <% 
-        String message = (String) request.getAttribute("message");
-        String status = (String) request.getAttribute("status");
-    %>
-
-    <!-- Modal for Success or Error Message -->
-    <% if (message != null && status != null) { %>
-        <div class="modal fade" id="statusModal" tabindex="-1" aria-labelledby="statusModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="statusModalLabel">Operation Status</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div id="modalMessage" class="d-flex justify-content-center">
-                            <!-- Success or Error Icon -->
-                            <i id="statusIcon" class="fas 
-                            <% if ("success".equals(status)) { %> 
-                                fa-check-circle text-success 
-                            <% } else { %> 
-                                fa-times-circle text-danger 
-                            <% } %>" style="font-size: 3rem;"></i>
-                            <!-- Message Text -->
-                            <p id="messageText" class="ms-3" style="font-size: 1.2rem;"><%= message %></p>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="successModalLabel">Operation Status</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Display success or error message -->
+                    <c:if test="${not empty sessionScope.message}">
+                        <p><strong>${sessionScope.message}</strong></p>
+                    </c:if>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
-
-        <!-- Show Modal Script -->
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                var myModal = new bootstrap.Modal(document.getElementById('statusModal'));
-                myModal.show();
-            });
-        </script>
-    <% } %>
+    </div>
 
     <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -152,6 +129,16 @@
             sidebar.classList.toggle('collapsed');
             mainContent.classList.toggle('expanded');
         }
+    </script>
+
+    <!-- Show success modal if message exists in session -->
+    <script>
+        <c:if test="${not empty sessionScope.message}">
+            var myModal = new bootstrap.Modal(document.getElementById('successModal'));
+            myModal.show();
+            // Remove the session message after showing the popup
+            <c:remove var="message" scope="session"/>
+        </c:if>
     </script>
 
 </body>

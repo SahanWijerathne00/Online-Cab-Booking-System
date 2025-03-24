@@ -1,12 +1,17 @@
-package com.MegaCityCab.admin.dao;
+ package com.MegaCityCab.admin.dao;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Paths;
+
 import com.MegaCityCab.admin.model.Add_Admin;
 import com.MegaCityCab.user.dao.DBConnection;
+
+import jakarta.servlet.http.Part;
 
 public class Add_AdminDAO {
 
@@ -35,6 +40,7 @@ public class Add_AdminDAO {
         }
         return isSaved;
     }
+    
     
     
     private static final String SELECT_ALL_ADMINS_SQL = "SELECT * FROM admin";
@@ -80,7 +86,6 @@ public class Add_AdminDAO {
     
     
     private static final String GET_ADMIN_BY_ID_SQL = "SELECT * FROM admin WHERE id = ?";
-    private static final String UPDATE_ADMIN_SQL = "UPDATE admin SET name = ?, username = ?, role = ? WHERE id = ?";
 
     public Add_Admin getAdminById(int id) {
         Add_Admin admin = null;
@@ -94,7 +99,8 @@ public class Add_AdminDAO {
                     resultSet.getInt("id"),
                     resultSet.getString("name"),
                     resultSet.getString("username"),
-                    resultSet.getString("role"), null, null
+                    resultSet.getString("password"),
+                    resultSet.getString("role"), null
                 );
             }
         } catch (SQLException e) {
@@ -102,26 +108,57 @@ public class Add_AdminDAO {
         }
         return admin;
     }
+    
+    
+    
 
-    public boolean updateAdmin(Add_Admin admin) {
+    public boolean updateAdmin(Add_Admin admin, Part avatarPart) {
         boolean isUpdated = false;
+        String UPDATE_ADMIN_SQL = "UPDATE admin SET name = ?, username = ?, password = ?, role = ?, avatar = ? WHERE id = ?";
+
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_ADMIN_SQL)) {
 
+            // Set the regular fields (name, username, password, role)
             statement.setString(1, admin.getName());
             statement.setString(2, admin.getUsername());
-            statement.setString(3, admin.getRole());
-            statement.setInt(4, admin.getid());
+            statement.setString(3, admin.getPassword());
+            statement.setString(4, admin.getRole());
 
+            // Handle avatar file upload
+            if (avatarPart != null && avatarPart.getSize() > 0) {
+                // Save the file and get the relative file path
+                String fileName = Paths.get(avatarPart.getSubmittedFileName()).getFileName().toString();
+                String savePath = "uploads" + File.separator + fileName; // Path where the file will be saved
+
+                // Save the avatar to the file system (make sure the "uploads" directory exists)
+                File fileSaveDir = new File(savePath);
+                fileSaveDir.getParentFile().mkdirs(); // Create directories if they don't exist
+                avatarPart.write(savePath); // Write the file to disk
+
+                // Set the file path in the database (instead of BLOB)
+                statement.setString(5, savePath);
+            } else {
+                // No new avatar, keep the current one (optional depending on use case)
+                statement.setNull(5, java.sql.Types.VARCHAR);  // Store null if no avatar is uploaded
+            }
+
+            // Set the ID to update the correct record
+            statement.setInt(6, admin.getid());
+
+            // Execute the update
             int rowsAffected = statement.executeUpdate();
             if (rowsAffected > 0) {
                 isUpdated = true;
             }
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
+
         return isUpdated;
     }
+
+
     
     
     
@@ -143,4 +180,8 @@ public class Add_AdminDAO {
         }
         return isDeleted;
     }
+
+
+
+
 }  

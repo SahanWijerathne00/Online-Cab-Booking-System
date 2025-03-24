@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,10 +43,11 @@
                         <select class="form-control" id="category" name="category" required>
                             <option value="expo">expo</option>
                             <option value="budget">budget</option>
-                            <option value="semi14">Semi</option>
+                            <option value="semi">Semi</option>
                             <option value="car">car</option>
                             <option value="9 seater">9 Seater</option>
                             <option value="14 seater">14 seater</option>
+                            <option value="van">Van</option>
                         </select>
                     </div>
                     <div class="col-md-6 mb-3">

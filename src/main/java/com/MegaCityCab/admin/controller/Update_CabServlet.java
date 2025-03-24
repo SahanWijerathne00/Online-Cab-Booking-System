@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.UUID;
@@ -17,80 +18,90 @@ import com.MegaCityCab.admin.model.Add_Cab;
 @WebServlet("/Admin/Update_CabServlet")
 public class Update_CabServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-
     private Add_CabDAO cabDAO = new Add_CabDAO();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            // Get updated data from the form
-           String idParam = request.getParameter("id");
-
-           
-
-            // Parse the ID safely
+            // Retrieve the cab ID and other form data
+            String idParam = request.getParameter("id"); // This gets the "id" parameter as a String
             int id = 0;
-            try {
-                id = Integer.parseInt(idParam);
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-                response.sendRedirect("error.jsp?message=Invalid ID Format");
+
+            if (idParam != null && !idParam.trim().isEmpty()) {
+                try {
+                    id = Integer.parseInt(idParam); // This converts the String to an int
+                } catch (NumberFormatException e) {
+                    // Handle the exception if parsing fails
+                    e.printStackTrace();
+                    response.sendRedirect("error3.jsp");  // Redirect to an error page if parsing fails
+                    return;
+                }
+            } else {
+                // Handle the case where the parameter is missing or empty
+                response.sendRedirect("error4.jsp");  // Redirect to an error page if "id" is missing or empty
                 return;
             }
 
-            // Retrieve other form data
+            // Retrieving other parameters from the form
             String regNumber = request.getParameter("regNumber");
             String category = request.getParameter("category");
+            String model = request.getParameter("model");
             String plateNumber = request.getParameter("plateNumber");
             String fare = request.getParameter("fare");
             String driverName = request.getParameter("driverName");
             String driverLicense = request.getParameter("driverLicense");
             String driverContact = request.getParameter("driverContact");
             String driverAddress = request.getParameter("driverAddress");
-            String status = request.getParameter("status");
 
             // Handle the image file upload
-            String imagePath = handleFileUpload(request);
+            Part imagePart = request.getPart("cabImage");
+            String imagePath = null;
+
+            if (imagePart != null && imagePart.getSize() > 0) {
+                // Generate a unique file name
+                String fileName = UUID.randomUUID().toString() + Paths.get(imagePart.getSubmittedFileName()).getFileName();
+                String uploadDir = getServletContext().getRealPath("/") + "uploads";
+                File uploadDirFile = new File(uploadDir);
+
+                if (!uploadDirFile.exists()) {
+                    uploadDirFile.mkdirs(); // Create directory if it doesn't exist
+                }
+
+                imagePath = uploadDir + "/" + fileName;
+                imagePart.write(imagePath); // Save the file to the server
+            } else {
+                // If no new image, retain the old image
+                imagePath = request.getParameter("oldImage");  // Pass the old image path if no new image is uploaded
+            }
 
             // Create a new Add_Cab object with the updated data
-            Add_Cab cab = new Add_Cab(id, regNumber, category, plateNumber, fare, driverName, driverLicense, driverContact, driverAddress, imagePath, status);
+            Add_Cab cab = new Add_Cab(
+                id,
+                category,
+                regNumber,
+                model,
+                plateNumber,
+                fare,
+                driverName,
+                driverLicense,
+                driverContact,
+                driverAddress,
+                imagePath
+            );
 
             // Use the DAO to update the cab in the database
             boolean isUpdated = cabDAO.updateCab(cab);
 
-            // Redirect to the appropriate page based on success/failure
+            // Redirect based on success or failure
             if (isUpdated) {
-                response.sendRedirect("success.jsp");  // Redirect to a success page if the update is successful
+                response.sendRedirect(request.getContextPath() + "/Admin/Manage_CabsServlet");  // Redirect to manage cabs page
             } else {
-                response.sendRedirect("error1.jsp");    // Redirect to an error page if the update fails
+                response.sendRedirect("error1.jsp");  // Handle error case
             }
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-            response.sendRedirect("error2.jsp?message=Invalid ID");
+
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect("error3.jsp");
-        }
-    }
-
-    private String handleFileUpload(HttpServletRequest request) throws IOException, ServletException {
-        // Get the image file from the request
-        Part filePart = request.getPart("cabImage"); // Assuming "cabImage" is the name attribute of the input
-        if (filePart != null && filePart.getSize() > 0) {
-            // Generate a unique file name to avoid collisions
-            String fileName = UUID.randomUUID().toString() + "_" + Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-            
-            // Define the path where the image will be stored
-            String savePath = getServletContext().getRealPath("/") + "images/cabs/" + fileName;
-
-            // Save the uploaded file to the server
-            filePart.write(savePath);
-
-            // Return the relative image path to store in the database
-            return "resources/Images/cabs/" + fileName;
-        } else {
-            // If no image is uploaded, return the existing image path (you might want to keep the old image)
-            return request.getParameter("existingImage"); // Ensure that the current image is available in the form if no new image is uploaded
+            response.sendRedirect("error2.jsp");  // Handle any exceptions
         }
     }
 }

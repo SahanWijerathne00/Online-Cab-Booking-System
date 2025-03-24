@@ -120,7 +120,7 @@
                 <a class="nav-link active" href="<%= request.getContextPath() %>/Views/Admin/A_Homepage.jsp"><i class="fas fa-home"></i> <span class="nav-text">Dashboard</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<%= request.getContextPath() %>/Views/Admin/Manage_booking.jsp"><i class="fas fa-calendar-alt"></i> <span class="nav-text">View Bookings</span></a>
+                <a class="nav-link" href="<%= request.getContextPath() %>/Admin/ViewBookingServlet"><i class="fas fa-calendar-alt"></i> <span class="nav-text">View Bookings</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<%= request.getContextPath() %>/Admin/Add_CategoryServlet"><i class="fas fa-list"></i> <span class="nav-text">Manage Category</span></a>
@@ -134,6 +134,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="<%= request.getContextPath() %>/Admin/Manage_AdminsServlet"><i class="fas fa-user-shield"></i> <span class="nav-text">System Admins</span></a>
             </li>
+            <li class="nav-item">
+			    <a class="nav-link" href="<%= request.getContextPath() %>/Admin/ViewFeedbackServlet"><i class="fas fa-clipboard-list"></i> <span class="nav-text">View Feedbacks</span></a>
+			</li>
             <li class="nav-item">
                 <a class="nav-link text-danger" href="#"><i class="fas fa-sign-out-alt"></i> <span class="nav-text">Logout</span></a>
             </li>        

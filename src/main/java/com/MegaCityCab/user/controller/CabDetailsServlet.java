@@ -46,7 +46,10 @@ public class CabDetailsServlet extends HttpServlet {
         session.setAttribute("cabFare", cabDetails.getFare());
         session.setAttribute("driverName", cabDetails.getDriverName());
         session.setAttribute("driverContact", cabDetails.getContact());
+        session.setAttribute("plateNumber", cabDetails.getPlateNumber()); 
+        session.setAttribute("driverAddress", cabDetails.getAddress()); 
 
+        
         response.sendRedirect(request.getContextPath() + "/Views/User/U_view_cabs.jsp");
     }
 }

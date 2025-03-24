@@ -63,8 +63,8 @@
                                 <c:forEach var="cab" items="${cabs}">
 								    <tr>
 								        <td>${cab.id}</td>
-								        <td>${cab.regNumber}</td>
 								        <td>${cab.category}</td>
+								         <td>${cab.regNumber}</td>
 								        <td>
 								        	${cab.model}<br>
 								        	<strong>Plate:</strong> ${cab.plateNumber}

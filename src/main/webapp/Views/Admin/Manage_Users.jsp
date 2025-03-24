@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../Views/CSS/Admin.css">
-
 </head>
 <body>
 
@@ -30,8 +29,8 @@
 
         <div class="container mt-4">
             <div class="d-flex justify-content-between align-items-center">
-    			<h4>Manage Users</h4>
-			</div>
+                <h4>Manage Users</h4>
+            </div>
 
             <!-- Search Bar -->
             <div class="mt-3 mb-3">
@@ -43,17 +42,17 @@
                 <div class="card-body">
                     <div class="table-responsive">
 
-                    <!-- Debug: Print users list size -->
-				    <p><strong>Total Users : </strong>
-                        <c:choose>
-                            <c:when test="${not empty requestScope.users}">
-                                ${requestScope.users.size()}
-                            </c:when>
-                            <c:otherwise>
-                                <span style="color: red;">users is NULL</span>
-                            </c:otherwise>
-                        </c:choose>
-                    </p>
+                        <!-- Debug: Print users list size -->
+                        <p><strong>Total Users : </strong>
+                            <c:choose>
+                                <c:when test="${not empty requestScope.users}">
+                                    ${requestScope.users.size()}
+                                </c:when>
+                                <c:otherwise>
+                                    <span style="color: red;">users is NULL</span>
+                                </c:otherwise>
+                            </c:choose>
+                        </p>
 
                         <table class="table table-bordered" id="userTable">
                             <thead class="table-dark">
@@ -72,7 +71,7 @@
                                 <!-- Loop through the user data -->
                                 <c:choose>
                                     <c:when test="${not empty requestScope.users}">
-                                        <c:forEach var="user" items="${requestScope.users}">
+                                         <c:forEach var="user" items="${requestScope.users}">
                                             <tr>
                                                 <td>${user.registerId}</td>
                                                 <td>${user.firstName} ${user.lastName}</td>
@@ -82,17 +81,19 @@
                                                 <td>${user.email}</td>
                                                 <td>${user.phoneNumber}</td>
                                                 <td>
-                                                    <div class="dropdown">
-													    <button class="btn btn-info " type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-													        Remove
-													    </button>
-													        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-													    
-													</div>
-
+                                                    <!-- Add the 'Remove' button and pass the userId -->
+                                                    <button class="btn btn-info" type="button" data-bs-toggle="modal" data-bs-target="#confirmationModal" 
+                                                    onclick="setUserId(${user.registerId})" style="background-color:#f2463a; color:white;"
+                                                    >Remove</button>
                                                 </td>
                                             </tr>
                                         </c:forEach>
+
+                                        <!-- The Form to Submit the User ID for Deletion -->
+                                        <form id="deleteForm" method="post" action="<%= request.getContextPath() %>/Admin/Delete_UserServlet">
+                                            <input type="hidden" name="userId" id="userIdToDelete">
+                                        </form>
+
                                     </c:when>
                                     <c:otherwise>
                                         <tr>
@@ -107,10 +108,53 @@
             </div>
         </div>
     </div>
+    
+    <!-- Modal for Confirmation -->
+	<div class="modal" tabindex="-1" id="confirmationModal" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <h5 class="modal-title" id="confirmationModalLabel">Confirm Deletion</h5>
+	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	            </div>
+	            <div class="modal-body">
+	                <p><b>Are you sure you want to delete this user?<br>
+	                 This action cannot be undone.
+	                 </b></p>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+	                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	
+    
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="successModalLabel">Operation Status</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Dynamic message from the session attribute -->
+                    <c:if test="${not empty sessionScope.deleteMessage}">
+                        <p><b>${sessionScope.deleteMessage}</b></p>
+                    </c:if>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
@@ -146,7 +190,7 @@
             }
         }
     </script>
-    
+
     <script>
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
@@ -156,6 +200,24 @@
             sidebar.classList.toggle('collapsed');
             mainContent.classList.toggle('expanded');
         }
+
+        function setUserId(userId) {
+            // Set the userId to the hidden input field
+            document.getElementById("userIdToDelete").value = userId;
+        }
+
+        // When clicking the delete button, submit the form to delete the user
+        document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
+            document.getElementById('deleteForm').submit();
+        });
+
+        // Show the success modal if there's a message
+        <c:if test="${not empty sessionScope.deleteMessage}">
+            var myModal = new bootstrap.Modal(document.getElementById('successModal'));
+            myModal.show();
+            // Remove the session message after showing the popup
+            <c:remove var="deleteMessage" scope="session"/>
+        </c:if>
     </script>
     
 

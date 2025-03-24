@@ -29,7 +29,9 @@ public class UserLoginDAO {
                 user.setAddress(rs.getString("address"));
                 user.setEmail(rs.getString("email"));
                 user.setPhoneNumber(rs.getString("phone_number"));
-                
+                user.setNic(rs.getString("nic"));
+                user.setGender(rs.getString("gender"));
+                user.setRegisterId(String.valueOf(rs.getInt("register_id"))); // If register_id is an integer
                 
                 return user;  // Return valid user
             }

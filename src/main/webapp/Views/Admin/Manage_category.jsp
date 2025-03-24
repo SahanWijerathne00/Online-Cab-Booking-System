@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+             <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <html lang="en">
@@ -166,9 +166,7 @@
 	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	            </div>
 	            <div class="modal-body">
-	                <b>Are you sure you want to Delete this Cab?<br>
-	                   This action cannot be undone.
-	                </b>
+	                <b>Are you sure you want to Delete this Cab Category?</b>
 	            </div>
 	            <div class="modal-footer">
 	                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -181,7 +179,7 @@
 	    </div>
 	</div>
 	
-	<div class="modal fade" id="successMessageModal" tabindex="-1" aria-labelledby="successMessageModalLabel" aria-hidden="true">
+	 <div class="modal fade" id="successMessageModal" tabindex="-1" aria-labelledby="successMessageModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -189,7 +187,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <b><span id="successMessageContent"> </span></b>  <!-- Success message content goes here -->
+                    <!-- Display success or error message dynamically -->
+                    <c:if test="${not empty message}">
+                        <b><span id="successMessageContent">${message}</span></b>
+                    </c:if>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -199,20 +200,43 @@
     </div>
     
     
-    <!-- Bootstrap JS and Popper.js (required for modal functionality) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+     <!-- Modal for success message -->
+	<div class="modal fade" id="successMessageModal1" tabindex="-1" aria-labelledby="successMessageModalLabel1" aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <h5 class="modal-title" id="successMessageModalLabel1">Success</h5>
+	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	            </div>
+	            <div class="modal-body">
+	                <!-- Display success or error message dynamically -->
+	                <c:if test="${not empty param.message}">
+	                    <b><span id="successMessageContent">${param.message}</span></b>
+	                </c:if>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	
+	<script>
+    <c:if test="${not empty message}">
+        // Trigger the modal to display the success message
+        var successModal = new bootstrap.Modal(document.getElementById('successMessageModal'));
+        successModal.show();
+    </c:if>
 
-    <!-- JavaScript to trigger modal -->
-    <script>
-        <c:if test="${not empty param.message}">
-            // Set the success message dynamically in the modal content
-            document.getElementById('successMessageContent').innerText = '${param.message}';
-            
-            // Trigger the modal to display the success message
-            var successModal = new bootstrap.Modal(document.getElementById('successMessageModal'));
-            successModal.show();
-        </c:if>
-    </script>
+    <c:if test="${not empty param.message}">
+        // Trigger the modal to display the success message
+        var successModal1 = new bootstrap.Modal(document.getElementById('successMessageModal1'));
+        successModal1.show();
+    </c:if>
+</script>
+
+    
+    
 
     <!-- Custom JS to open the modal programmatically when needed -->
     <script>

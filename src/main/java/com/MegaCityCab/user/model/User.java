@@ -1,7 +1,7 @@
 package com.MegaCityCab.user.model;
 
 public class User {
-	private int registerId;
+	private String registerId;
     private String firstName;
     private String lastName;
     private String address;
@@ -14,11 +14,11 @@ public class User {
 
     // Getters and setters
     
-    public int getRegisterId() {
+    public String getRegisterId() {
         return registerId;
     }
 
-    public void setRegisterId(int registerId) {
+    public void setRegisterId(String registerId) {
         this.registerId = registerId;
     }
     

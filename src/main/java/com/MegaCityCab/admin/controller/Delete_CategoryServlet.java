@@ -28,8 +28,8 @@ public class Delete_CategoryServlet extends HttpServlet {
             boolean isDeleted = categoryDAO.deleteCategoryById(id); // Call DAO method to delete the category
 
             if (isDeleted) {
-                // Redirect to the Manage Categories page with a success message
-                response.sendRedirect("Add_CategoryServlet?message=Category deleted successfully.");
+                // Pass the message correctly in the redirect
+                response.sendRedirect(request.getContextPath() + "/Admin/Add_CategoryServlet?message=Category deleted successfully.");
             } else {
                 response.sendRedirect("error.jsp"); // Redirect to error page if deletion fails
             }
@@ -39,3 +39,4 @@ public class Delete_CategoryServlet extends HttpServlet {
     }
 }
 
+   

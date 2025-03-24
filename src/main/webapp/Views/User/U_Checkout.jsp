@@ -19,6 +19,7 @@
             margin: auto;
             padding: 30px;
             background: #fff;
+            background-color:#ebe68d;
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
@@ -55,66 +56,80 @@
 
 <div class="container mt-5">
     <div class="checkout-container">
-        <h2 class="text-center mb-4"><i class="bi bi-check-circle-fill"></i> Checkout</h2>
-        <p class="text-center text-muted">Almost there! Please review your booking details before confirming.</p>
-
-        <div class="row">
-            <!-- User Details -->
-            <div class="col-md-6">
-                <div class="section-header"><i class="bi bi-person-fill"></i> User Details</div>
-               <div class="card p-3" style="background-color: #c9c9c7;">
-				    <p><strong>Name:</strong> ${sessionScope.name}</p>
-				    <p><strong>Email:</strong> ${sessionScope.email}</p>
-				    <p><strong>Mobile:</strong> ${sessionScope.phone}</p>
-			</div>
-
-            </div>
-
-            <!-- Booking Details -->
-            <div class="col-md-6">
-                <div class="section-header"><i class="bi bi-car-front-fill"></i> Booking Details</div>
-                <div class="card p-3" style="background-color: #c9c9c7;">
-                    <p><strong>Cab:</strong> ${sessionScope.cabCategory} - ${sessionScope.cabModel}</p>
-                    <p><i class="bi bi-calendar-check-fill"></i> <strong>Booking Time:</strong> ${sessionScope.bookingTime}</p>
-                    <p><i class="bi bi-geo-alt-fill text-primary"></i> <strong>Pickup:</strong> ${sessionScope.pickupLocation}</p>
-                    <p><i class="bi bi-geo-alt-fill text-danger"></i> <strong>Drop-off:</strong> ${sessionScope.dropLocation}</p>
-                    <p><i class="bi bi-rulers"></i> <strong>Distance:</strong> ${sessionScope.distance}</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Payment Details -->
-        <div class="section-header mt-4"><i class="bi bi-wallet-fill"></i> Payment Details</div>
-        <div class="card p-3" style="background-color: #c9c9c7;">
-            <p class="fw-bold"><i class="bi bi-cash-coin"></i> Estimated Fare: 
-                <span class="text-primary">LKR <%= session.getAttribute("price") != null ? session.getAttribute("price") : "0.00" %></span>
-            </p>
-
-            <!-- Payment Method Selection -->
-            <form action="<%= request.getContextPath() %>/user/PaymentServlet" method="post" id="paymentForm">
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="paymentMethod" value="cash" checked>
-                    <label class="form-check-label"><i class="bi bi-cash"></i> Cash Payment</label>
-                </div>
-
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="paymentMethod" id="cardPayment" value="card">
-                    <label class="form-check-label"><i class="bi bi-credit-card-2-front"></i> Card Payment</label>
-                </div>
-
-                <div class="form-check">
-                        <input class="form-check-input" type="radio" name="paymentMethod" id="walletPayment" value="wallet">
-                        <label class="form-check-label"><i class="bi bi-wallet"></i> Digital Wallet</label>
-                </div>
-
-            </form>
-        </div>
+    
+		<form action="<%= request.getContextPath() %>/user/CheckoutServlet" method="POST" id="checkoutForm">
+    
+	        <h2 class="text-center mb-4"><i class="bi bi-check-circle-fill"></i> Checkout</h2>
+	        <p class="text-center text-muted" style="font-weight:bold;" >Almost there! Please review your booking details before confirming.</p>
+	        
+	
+	        <div class="row">
+	        	
+	            <input type="hidden" id="regid" name="regid" value="${sessionScope.regid}">
+	            <input type="hidden" id="fare" name="fare" value="${sessionScope.fare}">
+	            <input type="hidden" id="rate" name="rate" value="${sessionScope.rate}">
+	            <input type="hidden" id="dname" name="dname" value="${sessionScope.dname}">
+	            <input type="hidden" id="driverContact" name="driverContact" value="${sessionScope.driverContact}">
+	            <input type="hidden" id="driverAddress" name="driverAddress" value="${sessionScope.driverAddress}">
+	            <input type="hidden" id="plate" name="plate" value="${sessionScope.plate }"> 
+	            
+		
+	            <!-- User Details -->
+	            <div class="col-md-6">
+	                <div class="section-header"><i class="bi bi-person-fill"></i> User Details</div>
+	                <div class="card p-3" style="background-color: #c9c9c7;">
+					    <p><strong>Name:</strong> ${sessionScope.name}</p>
+					    <p><strong>Email:</strong> ${sessionScope.email}</p>
+					    <p><strong>Mobile:</strong> ${sessionScope.phone}</p>
+					</div>
+	
+	            </div>
+	
+	            <!-- Booking Details -->
+	            <div class="col-md-6">
+	                <div class="section-header"><i class="bi bi-car-front-fill"></i> Booking Details</div>
+	                <div class="card p-3" style="background-color: #c9c9c7;">
+	                    <p><strong>Cab:</strong> ${sessionScope.cabCategory} - ${sessionScope.cabModel}</p>
+	                    <p><i class="bi bi-calendar-check-fill"></i> <strong>Booking Time:</strong> ${sessionScope.bookingTime}</p>
+	                    <p><i class="bi bi-geo-alt-fill text-primary"></i> <strong>Pickup:</strong> ${sessionScope.pickupLocation}</p>
+	                    <p><i class="bi bi-geo-alt-fill text-danger"></i> <strong>Drop-off:</strong> ${sessionScope.dropLocation}</p>
+	                    <p><i class="bi bi-rulers"></i> <strong>Distance:</strong> ${sessionScope.distance} km</p>
+	                </div>
+	            </div>
+	        </div>
+	
+	        <!-- Payment Details -->
+	        <div class="section-header mt-4"><i class="bi bi-wallet-fill"></i> Payment Details</div>
+	        <div class="card p-3" style="background-color: #c9c9c7;">
+	            <p class="fw-bold" id="amount" name="amount"><i class="bi bi-cash-coin" style="font-size:1.5em; font-weight:bold;"></i> Estimated Fare: 
+	                <span class="text-primary" style="font-size:1.4em; font-weight:bold;">LKR <%= session.getAttribute("price") != null ? session.getAttribute("price") : "0.00" %></span>
+	            </p>
+	
+	            <!-- Payment Method Selection -->
+	                <div class="form-check">
+	                    <input class="form-check-input" type="radio" name="paymentMethod" value="cash">
+	                    <label class="form-check-label"><i class="bi bi-cash"></i> Cash Payment</label>
+	                </div>
+	
+	                <div class="form-check">
+	                    <input class="form-check-input" type="radio" name="paymentMethod" id="cardPayment" value="card">
+	                    <label class="form-check-label"><i class="bi bi-credit-card-2-front"></i> Card Payment</label>
+	                </div>
+	
+	                <div class="form-check">
+	                        <input class="form-check-input" type="radio" name="paymentMethod" id="walletPayment" value="wallet">
+	                        <label class="form-check-label"><i class="bi bi-wallet"></i> Digital Wallet</label>
+	                </div>
+	            </>
+	        </div>
+	        
+	        
+	        <div class="mt-4 d-flex justify-content-between">
+	            <a href="U_view_cabs.jsp" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Back</a>
+				<button type="submit" class="btn btn-confirm"><i class="bi bi-check-circle"></i> Confirm Ride</button>
+	        </div>
         
-        
-        <div class="mt-4 d-flex justify-content-between">
-            <a href="U_view_cabs.jsp" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Back</a>
-            <button class="btn btn-confirm"><i class="bi bi-check-circle"></i> Confirm Ride</button>
-        </div>
+        </form>
 
         <!-- Card Payment Modal -->
         <div class="modal fade" id="cardModal" tabindex="-1" aria-labelledby="cardModalLabel" aria-hidden="true">
@@ -184,9 +199,6 @@
 		    } 
 		%>
 
-
-        <!-- Buttons -->
-        
     </div>
 </div>
 
@@ -215,8 +227,11 @@
         });
 
     });
-</script>
 
+
+  
+
+</script>
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 

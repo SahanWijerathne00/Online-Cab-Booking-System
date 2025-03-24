@@ -1,32 +1,36 @@
 package com.MegaCityCab.admin.controller;
 
+import com.MegaCityCab.admin.dao.Add_AdminDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import jakarta.servlet.http.*;
 
-import com.MegaCityCab.admin.dao.Add_AdminDAO;
+import java.io.IOException;
 
 @WebServlet("/Admin/Delete_AdminServlet")
 public class Delete_AdminServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
 
-    private Add_AdminDAO adminDAO = new Add_AdminDAO();
+	private static final long serialVersionUID = 1L;
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Get the admin ID from the request parameter
-        int id = Integer.parseInt(request.getParameter("id"));
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String adminIdParam = request.getParameter("id");
         
-        // Delete the admin using the DAO
-        boolean isDeleted = adminDAO.deleteAdmin(id);
-        
-        if (isDeleted) {
-        	 response.sendRedirect("Manage_AdminsServlet?message=Cab deleted successfully.");
-        } else {
-            response.sendRedirect("error.jsp"); // Redirect to error page if deletion fails
+        if (adminIdParam != null) {
+            int adminId = Integer.parseInt(adminIdParam);
+            Add_AdminDAO adminDAO = new Add_AdminDAO();
+
+            boolean success = adminDAO.deleteAdmin(adminId); // Assume deleteAdmin handles the deletion logic
+
+            if (success) {
+                // Set success message in the session
+                request.getSession().setAttribute("deleteMessage", "Admin deleted successfully!");
+            } else {
+                // Set failure message in the session
+                request.getSession().setAttribute("deleteMessage", "Failed to delete admin.");
+            }
         }
+
+        // Redirect back to Manage_AdminsServlet to display the message
+        response.sendRedirect(request.getContextPath() + "/Admin/Manage_AdminsServlet");
     }
 }
-

@@ -13,7 +13,7 @@ import java.util.List;
 public class Add_CabDAO {
 
     // SQL Query to insert a new cab and driver details into the database
-    private static final String INSERT_CAB_SQL = "INSERT INTO cab (category, reg_number, model, plate_number, fare, image, driver_name, license_number, contact, address) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String INSERT_CAB_SQL = "INSERT INTO cab (category, reg_number, model, plate_number, fare, image, driver_name, license_number, contact, address) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     // Method to save the cab details into the database
     public boolean saveCab(Add_Cab cab) {
@@ -142,9 +142,9 @@ public class Add_CabDAO {
             statement.setString(6,  cab.getImage());
             statement.setString(7, cab.getDriverName());
             statement.setString(8, cab.getDriverLicense());
-            statement.setString(9, cab.getDriverContact());
+            statement.setString(9, cab.getDriverContact()); 
             statement.setString(10, cab.getDriverAddress());
-            statement.setInt(11, cab.getid());  
+            statement.setInt(11, cab.getId());  
 
             int rowsAffected = statement.executeUpdate();
             if (rowsAffected > 0) {

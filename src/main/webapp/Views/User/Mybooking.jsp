@@ -12,9 +12,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link href="../CSS/User.css" rel="stylesheet">
-    
 
     <style>
+        body {
+            background-color: #f4f7fa;
+        }
+
         .full-bg {
             position: absolute;
             top: 0;
@@ -26,78 +29,38 @@
             background-position: center center;
             z-index: -1;
         }
-        
-        .user-icon {
-            font-size: 1.5rem;
-            color: #6c757d;
-            background-color: #f1f1f1;
-            border-radius: 50%;
-            padding: 8px;
-            height: 35px;
-            width: 35px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: 2px solid #ddd;
-            cursor: pointer;
-        }
-
-        .user-menu {
-            display: none;
-            position: absolute;
-            top: 40px;
-            right: 10px;
-            background-color: #fff;
-            padding: 10px;
-            border-radius: 8px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .user-info {
-            position: relative;
-        }
-
-        .user-info:hover .user-menu {
-            display: block;
-        }
-
-        .logout-btn {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #000000;
-            background: #edd5d3;
-            border: none;
-            padding: 5px;
-            text-align: center;
-        }
-        
-        .logout-btn:hover {
-            color: #e83727;
-        }
-        
 
         .container {
-            margin-top: 100px;
+            margin-top: 80px;
         }
 
         .table-container {
             background-color: rgba(0, 0, 0, 0.7);
             padding: 30px;
-            border-radius: 8px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .table thead {
-            background-color: #343a40;
+            background-color: #007bff;
             color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
         }
 
-        .table th,
-        .table td {
+        .table th, .table td {
             text-align: center;
+            padding: 12px 15px;
+            font-size: 1rem;
         }
 
         .table-striped tbody tr:nth-of-type(odd) {
             background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: #f1f1f1;
+            cursor: pointer;
         }
 
         .btn {
@@ -105,11 +68,35 @@
             color: white;
             border-radius: 5px;
             font-size: 1.1rem;
-            padding: 10px;
+            padding: 10px 15px;
         }
 
         .btn:hover {
             background-color: #218838;
+        }
+
+        .nav-link.active {
+            background-color: #ddd;
+            color: #ebb521;
+            font-weight: bold;
+            border-radius: 5px;
+            padding: 5px 10px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #333;
+            padding: 10px 15px;
+            font-size: 1rem;
+        }
+
+        .btn-back {
+            background-color: #007bff;
+            border-color: #0056b3;
+        }
+
+        .btn-back:hover {
+            background-color: #0056b3;
         }
 
         /* Responsive table */
@@ -124,39 +111,14 @@
 <body>
 
     <div class="full-bg"></div>
-    
-     <div class="header d-flex justify-content-between align-items-center">
-        <div class="cab-name">MegaCity Cab</div>
-        <div class="nav-links d-flex justify-content-center flex-grow-1">
-            <a href="U_Homepage.jsp">Home</a>
-            <a href="ContactUs.jsp">Contact Us</a>
-            <a href="Mybooking.jsp">My Bookings</a>
-            <a href="UpdateProfile.jsp">Profile</a>
-            <a href="UserGuide.jsp">Guidelines</a>
-        </div>
-        <div class="user-info d-flex align-items-center">
-            <c:if test="${not empty sessionScope.userFirstName}">
-                <div class="d-flex align-items-center">
-                    <div class="user-icon me-2" onclick="toggleUserMenu()">
-                        <i class="bi bi-person-circle"></i>
-                    </div>
-                    <span class="greeting-text me-2">Hi, ${sessionScope.userFirstName}</span>
-                    <c:if test="${not empty sessionScope.userUsername}">
-                        <span class="username-text">@${sessionScope.userUsername}</span>
-                    </c:if>
-                </div>
-                <div class="user-menu">
-                    <button class="logout-btn" onclick="confirmLogout()">Logout</button>
-                </div>
-            </c:if>
-        </div>
-    </div>
+
+    <input type="hidden" id="id" value="${sessionScope.userId}">
 
     <div class="container">
         <div class="table-container">
             <h2 class="text-center text-white mb-4">My Booking Details</h2>
             <div class="table-responsive">
-                <table class="table table-striped">
+                <table class="table table-striped table-hover">
                     <thead>
                         <tr>
                             <th>Customer Name</th>
@@ -177,40 +139,58 @@
                                 <td>${booking.customerName}</td>
                                 <td>${booking.phoneNumber}</td>
                                 <td>${booking.email}</td>
-                                <td>${booking.pickup}</td>
-                                <td>${booking.drop}</td>
-                                <td>${booking.date}</td>
-                                <td>${booking.time}</td>
+                                <td>${booking.pickupLocation}</td>
+                                <td>${booking.dropLocation}</td>
+                                <td>${booking.bookingDate}</td>
+                                <td>${booking.bookingTime}</td>
                                 <td>${booking.amount}</td>
-                                <td>${booking.status}</td> <!-- Display the status -->
+                                <td>${booking.status}</td>
                             </tr>
                         </c:forEach>
                     </tbody>
                 </table>
             </div>
             <div class="text-center">
-                <a href="U_Homepage.jsp" class="btn">Back to Home</a>
+                <a href="<%= request.getContextPath() %>/Views/User/U_Homepage.jsp" class="btn btn-back">Back to Home</a>
             </div>
         </div>
     </div>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <script>
-	  function toggleUserMenu() {
-	            let menu = document.querySelector('.user-menu');
-	            menu.style.display = (menu.style.display === "block") ? "none" : "block";
-	        }
-	
-	        function confirmLogout() {
-	            let confirmAction = confirm("Are you sure you want to logout?");
-	            if (confirmAction) {
-	                window.location.href = "U_Login.jsp"; // Redirect to login page
-	            }
-	        }
-	</script>
-	
+        function toggleUserMenu() {
+            let menu = document.querySelector('.user-menu');
+            menu.style.display = (menu.style.display === "block") ? "none" : "block";
+        }
+
+        function confirmLogout() {
+            let confirmAction = confirm("Are you sure you want to logout?");
+            if (confirmAction) {
+                window.location.href = "U_Login.jsp"; // Redirect to login page
+            }
+        }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (window.location.pathname.includes(link.getAttribute('href'))) {
+                    link.classList.add('active');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function () {
+                    navLinks.forEach(link => link.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
 
 </body>
 

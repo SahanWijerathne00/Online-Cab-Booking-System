@@ -46,26 +46,28 @@
                                     <th>Avatar</th>
                                     <th>Name</th>
                                     <th>Username</th>
+                                    <th>Password</th>
                                     <th>Type</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:forEach var="admin" items="${admins}">
-						            <tr>
-						                <td>${admin.id}</td>
-										<td>
-										    <img src="data:image/png;base64,${admin.avatar}" alt="Admin Avatar" class="avatar" width="50" height="50">
-										</td>
-						                <td>${admin.name}</td>
-						                <td>${admin.username}</td>
-						                <td>${admin.role}</td>
-						                <td>
-								            <a href="Edit_AdminServlet?id=${admin.id}" class="btn btn-info">Edit</a>
+                                    <tr>
+                                        <td>${admin.id}</td>
+                                        <td>
+											<img src="${pageContext.request.contextPath}/uploads/${admin.avatar}" alt="Admin Avatar" width="50" height="50"/>
+                                        </td>
+                                        <td>${admin.name}</td>
+                                        <td>${admin.username}</td>
+                                        <td>${admin.password}</td>
+                                        <td>${admin.role}</td>
+                                        <td>
+                                            <a href="<%= request.getContextPath() %>/Admin/Edit_AdminServlet?id=${admin.id}" class="btn btn-info">Edit</a>
                                             <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal" onclick="setDeleteId(${admin.id})">Delete</button>
-						                </td>
-						            </tr>
-						        </c:forEach>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
                             </tbody>
                         </table>
                     </div>
@@ -74,36 +76,52 @@
         </div>
     </div>
     
-    
     <!-- Delete Confirmation Modal -->
-	<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
-	    <div class="modal-dialog">
-	        <div class="modal-content">
-	            <div class="modal-header">
-	                <h5 class="modal-title" id="deleteConfirmationModalLabel">Delete Admin</h5>
-	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	            </div>
-	            <div class="modal-body">
-	                Are you sure you want to delete this admin?
-	            </div>
-	            <div class="modal-footer">
-	                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-	                <form action="<%= request.getContextPath() %>/Admin/Delete_AdminServlet" method="POST">
-	                    <input type="hidden" name="id" id="deleteAdminId">
-	                    <button type="submit" class="btn btn-danger">Delete</button>
-	                </form>
-	            </div>
-	        </div>
-	    </div>
-	</div>
-	
-	
-	
-    
+    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteConfirmationModalLabel">Delete Admin</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <strong>Are you sure you want to delete this admin?</strong>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <form action="<%= request.getContextPath() %>/Admin/Delete_AdminServlet" method="POST">
+                        <input type="hidden" name="id" id="deleteAdminId">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="successModalLabel">Operation Status</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Display success or error message -->
+                    <c:if test="${not empty sessionScope.deleteMessage}">
+                        <p><b>${sessionScope.deleteMessage}</b></p>
+                    </c:if>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Bootstrap 5 JS -->
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- jQuery (Required for DataTables) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
@@ -122,13 +140,18 @@
             sidebar.classList.toggle('collapsed');
             mainContent.classList.toggle('expanded');
         }
-    </script>
-    
-    <script>
-	    function setDeleteId(adminId) {
-	        document.getElementById("deleteAdminId").value = adminId;
-    	}
 
+        function setDeleteId(adminId) {
+            document.getElementById("deleteAdminId").value = adminId;
+        }
+
+        // Show success modal if a message exists
+        <c:if test="${not empty sessionScope.deleteMessage}">
+            var myModal = new bootstrap.Modal(document.getElementById('successModal'));
+            myModal.show();
+            // Remove the session message after showing the popup
+            <c:remove var="deleteMessage" scope="session"/>
+        </c:if>
     </script>
 
 </body>

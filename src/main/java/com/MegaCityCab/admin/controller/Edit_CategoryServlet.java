@@ -43,7 +43,7 @@ public class Edit_CategoryServlet extends HttpServlet {
                 dispatcher.forward(request, response); // Forward to the JSP to render the modal
                 
             }else {
-                response.sendRedirect("error.jsp"); // Redirect to an error page if the category is not found
+                response.sendRedirect("error12.jsp"); // Redirect to an error page if the category is not found
             }
         } catch (NumberFormatException e) {
             response.sendRedirect("error14.jsp"); // Handle invalid ID format

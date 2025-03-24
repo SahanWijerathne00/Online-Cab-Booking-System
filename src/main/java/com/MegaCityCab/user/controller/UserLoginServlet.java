@@ -28,18 +28,27 @@ public class UserLoginServlet extends HttpServlet {
 
         if (user != null) {
             // Successful login
-        	session.setAttribute("message", "Login successful!");
+            session.setAttribute("message", "Login successful!");
             session.setAttribute("userFirstName", user.getFirstName());
             session.setAttribute("userLastName", user.getLastName());
             session.setAttribute("userEmail", user.getEmail());
             session.setAttribute("userAddress", user.getAddress());
             session.setAttribute("userPhoneNumber", user.getPhoneNumber());
+            session.setAttribute("userRegisterId", user.getRegisterId());
+            session.setAttribute("userUsername", user.getUsername());
+            session.setAttribute("userPassword", user.getPassword());
+            session.setAttribute("userGender", user.getGender());
+            session.setAttribute("userNic", user.getNic());
+            session.setAttribute("userId", user.getRegisterId());
             
-            response.sendRedirect(request.getContextPath() + "/Views/User/U_Homepage.jsp");
+            
+
+            // Do not redirect immediately; forward to the login page so that the modal can show
+            request.getRequestDispatcher("/Views/User/U_Login.jsp").forward(request, response);
         } else {
             // Failed login
             session.setAttribute("message", "Invalid username or password.");
-            response.sendRedirect(request.getContextPath() + "/Views/User/U_Login.jsp"); // Stay on login page
+            request.getRequestDispatcher("/Views/User/U_Login.jsp").forward(request, response); // Forward to the login page
         }
     }
 }

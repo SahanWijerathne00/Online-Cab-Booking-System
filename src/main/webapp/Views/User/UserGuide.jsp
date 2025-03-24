@@ -29,19 +29,20 @@
         }
         
         .user-icon {
-            font-size: 1.5rem; /* Reduced the font size */
+            font-size: 1.5rem;
             color: #6c757d;
             background-color: #f1f1f1;
             border-radius: 50%;
-            padding: 8px; /* Reduced padding */
-            height: 35px; /* Reduced height */
-            width: 35px; /* Reduced width */
+            padding: 8px;
+            height: 35px;
+            width: 35px;
             display: flex;
             justify-content: center;
             align-items: center;
             border: 2px solid #ddd;
+            cursor: pointer;
         }
-        
+
         .user-menu {
             display: none;
             position: absolute;
@@ -52,8 +53,15 @@
             border-radius: 8px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
-        
-        
+
+        .user-info {
+            position: relative;
+        }
+
+        .user-info:hover .user-menu {
+            display: block;
+        }
+
         .logout-btn {
             font-size: 1.5rem;
             font-weight: bold;
@@ -133,7 +141,24 @@
             padding: 10px;
             font-weight:bold;
         }
-        @media (max-width: 768px) {
+        
+        .nav-link.active {
+	        background-color:#ddd;  /* Red color for active link */
+	        color: #ebb521;  /* White text */
+	        font-weight: bold;
+	        border-radius: 5px;
+	        padding: 5px 10px;
+	    }
+	
+	    .nav-link {
+	        text-decoration: none;
+	        color: #333;  /* Normal link color */
+	        padding: 10px 15px;
+	        font-size: 1rem;
+	    }
+
+	    
+	        @media (max-width: 768px) {
             h2 {
                 font-size: 1.2rem;
             }
@@ -151,13 +176,13 @@
 <header>
    <div class="header d-flex justify-content-between align-items-center">
         <div class="cab-name">MegaCity Cab</div>
-        <div class="nav-links d-flex justify-content-center flex-grow-1">
-            <a href="U_Homepage.jsp">Home</a>
-            <a href="ContactUs.jsp">Contact Us</a>
-            <a href="Mybooking.jsp">My Bookings</a>
-            <a href="UpdateProfile.jsp">Profile</a>
-            <a href="UserGuide.jsp">Guidelines</a>
-        </div>
+	       <div class="nav-links d-flex justify-content-center flex-grow-1">
+		        <a href="U_Homepage.jsp" class="nav-link">Home</a>
+		        <a href="ContactUs.jsp" class="nav-link">Contact Us</a>
+		        <a href="<%= request.getContextPath() %>/User/MyBookingsServlet" class="nav-link">My Bookings</a>
+		        <a href="UpdateProfile.jsp" class="nav-link">Profile</a>
+		        <a href="UserGuide.jsp" class="nav-link">Guidelines</a>
+		    </div>
         <div class="user-info d-flex align-items-center">
             <c:if test="${not empty sessionScope.userFirstName}">
                 <div class="d-flex align-items-center">
@@ -165,9 +190,7 @@
                         <i class="bi bi-person-circle"></i>
                     </div>
                     <span class="greeting-text me-2">Hi, ${sessionScope.userFirstName}</span>
-                    <c:if test="${not empty sessionScope.userUsername}">
-                        <span class="username-text">@${sessionScope.userUsername}</span>
-                    </c:if>
+                    
                 </div>
                 <div class="user-menu">
                     <button class="logout-btn" onclick="confirmLogout()">Logout</button>
@@ -239,13 +262,13 @@
         <ul>
             <li><strong>How can I cancel my booking?</strong><br>To cancel your booking, simply visit the "My Bookings" section and select the "Cancel" option next to your reservation.</li>
             <li><strong>Can I change my ride details after booking?</strong><br>Yes, you can modify the details by contacting customer support before the ride is confirmed.</li>
-            <li><strong>What happens if I miss my cab?</strong><br>If you miss your cab, you can reschedule or book another one through the app.</li>
+            <li><strong>What happens if I miss my cab?</strong><br>If you miss your cab, you can reschedule or book another one through the web application.</li>
         </ul>
     </div>
     
 </div>
 
-<footer class="text-center">
+<footer class="text-center" style="margin-top:10px; padding:20px 0 20px; background-color: black; height:50px; color:white; font-weight:bold;">
         <p>&copy; 2025 Mega City Cab | All Rights Reserved</p>
 </footer>
 
@@ -262,5 +285,36 @@
             }
         }
 </script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Select all nav links
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        // Check if the current URL contains the link's href and add 'active' class to the corresponding link
+        navLinks.forEach(link => {
+            // Remove active class from all links initially
+            link.classList.remove('active');
+            
+            // If the current link's href matches the current URL, make it active
+            if (window.location.pathname.includes(link.getAttribute('href'))) {
+                link.classList.add('active');
+            }
+        });
+
+        // Add event listener for clicks on nav links to maintain the active state
+        navLinks.forEach(link => {
+            link.addEventListener('click', function () {
+                // Remove 'active' class from all nav links
+                navLinks.forEach(link => link.classList.remove('active'));
+                
+                // Add 'active' class to the clicked link
+                this.classList.add('active');
+            });
+        });
+    });
+</script>
+
 </body>
 </html>
