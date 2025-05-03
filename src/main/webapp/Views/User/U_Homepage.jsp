@@ -15,7 +15,7 @@
     <!-- Bootstrap Icons CDN for User Icon -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8RD20mEV_I4LM8veafl2RmuNbat7u9jU&libraries=places"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YourAPI_Key"></script>
     <link href="../CSS/User.css" rel="stylesheet">
 
     <style>

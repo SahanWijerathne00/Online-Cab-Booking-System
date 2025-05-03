@@ -391,7 +391,7 @@
 	                    <input type="hidden" id="cabModel" name="cabModel" value="${sessionScope.cabModel}">
 	                    <input type="hidden" id="cabCategory" name="cabCategory" value="${sessionScope.cabCategory}">
 	                    <input type="hidden" id="distance" name="distance" value="${sessionScope.distance}">
-	                    <input type="text" id="regid" name="regid" value="${sessionScope.registerId}">
+	                    <input type="hidden" id="regid" name="regid" value="${sessionScope.registerId}">
 	                    <input type="hidden" id="fare" name="fare" value="${sessionScope.cabFare}">
 	                    <input type="hidden" id="rate" name="rate" value="${sessionScope.cabRate}">
 	                    <input type="hidden" id="drivername" name="dname" value="${sessionScope.driverName}">
