@@ -1,6 +1,6 @@
 # 🚖 Mega City Cab Management System
 
-![Front Page](./cab_sytem.png)
+![Front Page](./cab_system.png)
 
 ## 📌 Project Overview
 
